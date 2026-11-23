@@ -1,0 +1,2724 @@
+{
+  "version": 1,
+  "area": "deckOptions",
+  "methods": [
+    {
+      "name": "deckOptions.get",
+      "description": "Read every native preset, defaults, collection flags and independent deck/today overrides.",
+      "mutating": false,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {
+          "deckId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "deckId"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "deckId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "config": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "name": {
+                "type": "string",
+                "maxLength": 255
+              },
+              "dailyLimits": {
+                "type": "object",
+                "properties": {
+                  "new": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9999
+                  },
+                  "review": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9999
+                  },
+                  "newIgnoresReviewLimit": {
+                    "type": "boolean"
+                  },
+                  "limitsStartFromTop": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "new",
+                  "review",
+                  "newIgnoresReviewLimit",
+                  "limitsStartFromTop"
+                ],
+                "additionalProperties": false
+              },
+              "newCards": {
+                "type": "object",
+                "properties": {
+                  "stepsMinutes": {
+                    "type": "array",
+                    "items": {
+                      "type": "number",
+                      "minimum": 0.016666666666666666,
+                      "maximum": 35791396
+                    },
+                    "maxItems": 32
+                  },
+                  "graduatingIntervalDays": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 36500
+                  },
+                  "easyIntervalDays": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 36500
+                  },
+                  "insertionOrder": {
+                    "type": "string",
+                    "enum": [
+                      "sequential",
+                      "random"
+                    ]
+                  }
+                },
+                "required": [
+                  "stepsMinutes",
+                  "graduatingIntervalDays",
+                  "easyIntervalDays",
+                  "insertionOrder"
+                ],
+                "additionalProperties": false
+              },
+              "lapses": {
+                "type": "object",
+                "properties": {
+                  "stepsMinutes": {
+                    "type": "array",
+                    "items": {
+                      "type": "number",
+                      "minimum": 0.016666666666666666,
+                      "maximum": 35791396
+                    },
+                    "maxItems": 32
+                  },
+                  "minimumIntervalDays": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 36500
+                  },
+                  "leechThreshold": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 9999
+                  },
+                  "leechAction": {
+                    "type": "string",
+                    "enum": [
+                      "suspend",
+                      "tagOnly"
+                    ]
+                  }
+                },
+                "required": [
+                  "stepsMinutes",
+                  "minimumIntervalDays",
+                  "leechThreshold",
+                  "leechAction"
+                ],
+                "additionalProperties": false
+              },
+              "displayOrder": {
+                "type": "object",
+                "properties": {
+                  "newGather": {
+                    "type": "string",
+                    "enum": [
+                      "deck",
+                      "deckThenRandomNotes",
+                      "ascendingPosition",
+                      "descendingPosition",
+                      "randomNotes",
+                      "randomCards"
+                    ]
+                  },
+                  "newSort": {
+                    "type": "string",
+                    "enum": [
+                      "templateThenPosition",
+                      "templateThenRandom",
+                      "position",
+                      "randomNoteThenTemplate",
+                      "random"
+                    ]
+                  },
+                  "newReview": {
+                    "type": "string",
+                    "enum": [
+                      "mix",
+                      "afterReviews",
+                      "beforeReviews"
+                    ]
+                  },
+                  "interdayLearningReview": {
+                    "type": "string",
+                    "enum": [
+                      "mix",
+                      "afterReviews",
+                      "beforeReviews"
+                    ]
+                  },
+                  "reviewSort": {
+                    "type": "string",
+                    "enum": [
+                      "due",
+                      "dueThenDeck",
+                      "deckThenDue",
+                      "intervalAscending",
+                      "intervalDescending",
+                      "easeAscending",
+                      "easeDescending",
+                      "retrievabilityAscending",
+                      "random",
+                      "added",
+                      "reverseAdded",
+                      "retrievabilityDescending",
+                      "relativeOverdueness"
+                    ]
+                  }
+                },
+                "required": [
+                  "newGather",
+                  "newSort",
+                  "newReview",
+                  "interdayLearningReview",
+                  "reviewSort"
+                ],
+                "additionalProperties": false
+              },
+              "fsrs": {
+                "type": "object",
+                "properties": {
+                  "desiredRetention": {
+                    "type": "number",
+                    "minimum": 0.699999988079071,
+                    "maximum": 0.9900000095367432
+                  },
+                  "parameters": {
+                    "type": "array",
+                    "items": {
+                      "type": "number",
+                      "minimum": -100,
+                      "maximum": 100
+                    },
+                    "maxItems": 64
+                  },
+                  "historicalRetention": {
+                    "type": "number",
+                    "minimum": 0.699999988079071,
+                    "maximum": 0.9700000286102295
+                  },
+                  "parameters4": {
+                    "type": "array",
+                    "items": {
+                      "type": "number",
+                      "minimum": -100,
+                      "maximum": 100
+                    },
+                    "maxItems": 64
+                  },
+                  "parameters5": {
+                    "type": "array",
+                    "items": {
+                      "type": "number",
+                      "minimum": -100,
+                      "maximum": 100
+                    },
+                    "maxItems": 64
+                  },
+                  "ignoreReviewsBeforeDate": {
+                    "type": "string",
+                    "maxLength": 10
+                  },
+                  "parameterSearch": {
+                    "type": "string",
+                    "maxLength": 65536
+                  }
+                },
+                "required": [
+                  "desiredRetention",
+                  "parameters",
+                  "historicalRetention",
+                  "parameters4",
+                  "parameters5",
+                  "ignoreReviewsBeforeDate",
+                  "parameterSearch"
+                ],
+                "additionalProperties": false
+              },
+              "burying": {
+                "type": "object",
+                "properties": {
+                  "new": {
+                    "type": "boolean"
+                  },
+                  "review": {
+                    "type": "boolean"
+                  },
+                  "interdayLearning": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "new",
+                  "review",
+                  "interdayLearning"
+                ],
+                "additionalProperties": false
+              },
+              "audio": {
+                "type": "object",
+                "properties": {
+                  "autoplay": {
+                    "type": "boolean"
+                  },
+                  "replayQuestionOnAnswer": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "autoplay",
+                  "replayQuestionOnAnswer"
+                ],
+                "additionalProperties": false
+              },
+              "timer": {
+                "type": "object",
+                "properties": {
+                  "maximumAnswerSeconds": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 9999
+                  },
+                  "show": {
+                    "type": "boolean"
+                  },
+                  "stopOnAnswer": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "maximumAnswerSeconds",
+                  "show",
+                  "stopOnAnswer"
+                ],
+                "additionalProperties": false
+              },
+              "autoAdvance": {
+                "type": "object",
+                "properties": {
+                  "questionSeconds": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 9999
+                  },
+                  "answerSeconds": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 9999
+                  },
+                  "questionAction": {
+                    "type": "string",
+                    "enum": [
+                      "showAnswer",
+                      "showReminder"
+                    ]
+                  },
+                  "answerAction": {
+                    "type": "string",
+                    "enum": [
+                      "bury",
+                      "again",
+                      "good",
+                      "hard",
+                      "showReminder"
+                    ]
+                  },
+                  "waitForAudio": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "questionSeconds",
+                  "answerSeconds",
+                  "questionAction",
+                  "answerAction",
+                  "waitForAudio"
+                ],
+                "additionalProperties": false
+              },
+              "easyDays": {
+                "type": "array",
+                "items": {
+                  "type": "number",
+                  "enum": [
+                    0,
+                    0.5,
+                    1
+                  ]
+                },
+                "maxItems": 7
+              },
+              "advanced": {
+                "type": "object",
+                "properties": {
+                  "maximumIntervalDays": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 36500
+                  },
+                  "startingEase": {
+                    "type": "number",
+                    "minimum": 1.309999942779541,
+                    "maximum": 5
+                  },
+                  "easyBonus": {
+                    "type": "number",
+                    "minimum": 1,
+                    "maximum": 5
+                  },
+                  "intervalModifier": {
+                    "type": "number",
+                    "minimum": 0.5,
+                    "maximum": 2
+                  },
+                  "hardInterval": {
+                    "type": "number",
+                    "minimum": 0.5,
+                    "maximum": 1.3
+                  },
+                  "newInterval": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  },
+                  "customScheduling": {
+                    "type": "string",
+                    "maxLength": 1048576
+                  }
+                },
+                "required": [
+                  "maximumIntervalDays",
+                  "startingEase",
+                  "easyBonus",
+                  "intervalModifier",
+                  "hardInterval",
+                  "newInterval",
+                  "customScheduling"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "dailyLimits",
+              "newCards",
+              "lapses",
+              "displayOrder",
+              "fsrs",
+              "burying",
+              "audio",
+              "timer",
+              "autoAdvance",
+              "easyDays",
+              "advanced"
+            ],
+            "additionalProperties": false
+          },
+          "presets": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "name": {
+                  "type": "string",
+                  "maxLength": 255
+                },
+                "deckCount": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                }
+              },
+              "required": [
+                "id",
+                "name",
+                "deckCount"
+              ],
+              "additionalProperties": false
+            },
+            "maxItems": 10000
+          },
+          "presetConfigs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "name": {
+                  "type": "string",
+                  "maxLength": 255
+                },
+                "dailyLimits": {
+                  "type": "object",
+                  "properties": {
+                    "new": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9999
+                    },
+                    "review": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9999
+                    },
+                    "newIgnoresReviewLimit": {
+                      "type": "boolean"
+                    },
+                    "limitsStartFromTop": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "new",
+                    "review",
+                    "newIgnoresReviewLimit",
+                    "limitsStartFromTop"
+                  ],
+                  "additionalProperties": false
+                },
+                "newCards": {
+                  "type": "object",
+                  "properties": {
+                    "stepsMinutes": {
+                      "type": "array",
+                      "items": {
+                        "type": "number",
+                        "minimum": 0.016666666666666666,
+                        "maximum": 35791396
+                      },
+                      "maxItems": 32
+                    },
+                    "graduatingIntervalDays": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 36500
+                    },
+                    "easyIntervalDays": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 36500
+                    },
+                    "insertionOrder": {
+                      "type": "string",
+                      "enum": [
+                        "sequential",
+                        "random"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "stepsMinutes",
+                    "graduatingIntervalDays",
+                    "easyIntervalDays",
+                    "insertionOrder"
+                  ],
+                  "additionalProperties": false
+                },
+                "lapses": {
+                  "type": "object",
+                  "properties": {
+                    "stepsMinutes": {
+                      "type": "array",
+                      "items": {
+                        "type": "number",
+                        "minimum": 0.016666666666666666,
+                        "maximum": 35791396
+                      },
+                      "maxItems": 32
+                    },
+                    "minimumIntervalDays": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 36500
+                    },
+                    "leechThreshold": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9999
+                    },
+                    "leechAction": {
+                      "type": "string",
+                      "enum": [
+                        "suspend",
+                        "tagOnly"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "stepsMinutes",
+                    "minimumIntervalDays",
+                    "leechThreshold",
+                    "leechAction"
+                  ],
+                  "additionalProperties": false
+                },
+                "displayOrder": {
+                  "type": "object",
+                  "properties": {
+                    "newGather": {
+                      "type": "string",
+                      "enum": [
+                        "deck",
+                        "deckThenRandomNotes",
+                        "ascendingPosition",
+                        "descendingPosition",
+                        "randomNotes",
+                        "randomCards"
+                      ]
+                    },
+                    "newSort": {
+                      "type": "string",
+                      "enum": [
+                        "templateThenPosition",
+                        "templateThenRandom",
+                        "position",
+                        "randomNoteThenTemplate",
+                        "random"
+                      ]
+                    },
+                    "newReview": {
+                      "type": "string",
+                      "enum": [
+                        "mix",
+                        "afterReviews",
+                        "beforeReviews"
+                      ]
+                    },
+                    "interdayLearningReview": {
+                      "type": "string",
+                      "enum": [
+                        "mix",
+                        "afterReviews",
+                        "beforeReviews"
+                      ]
+                    },
+                    "reviewSort": {
+                      "type": "string",
+                      "enum": [
+                        "due",
+                        "dueThenDeck",
+                        "deckThenDue",
+                        "intervalAscending",
+                        "intervalDescending",
+                        "easeAscending",
+                        "easeDescending",
+                        "retrievabilityAscending",
+                        "random",
+                        "added",
+                        "reverseAdded",
+                        "retrievabilityDescending",
+                        "relativeOverdueness"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "newGather",
+                    "newSort",
+                    "newReview",
+                    "interdayLearningReview",
+                    "reviewSort"
+                  ],
+                  "additionalProperties": false
+                },
+                "fsrs": {
+                  "type": "object",
+                  "properties": {
+                    "desiredRetention": {
+                      "type": "number",
+                      "minimum": 0.699999988079071,
+                      "maximum": 0.9900000095367432
+                    },
+                    "parameters": {
+                      "type": "array",
+                      "items": {
+                        "type": "number",
+                        "minimum": -100,
+                        "maximum": 100
+                      },
+                      "maxItems": 64
+                    },
+                    "historicalRetention": {
+                      "type": "number",
+                      "minimum": 0.699999988079071,
+                      "maximum": 0.9700000286102295
+                    },
+                    "parameters4": {
+                      "type": "array",
+                      "items": {
+                        "type": "number",
+                        "minimum": -100,
+                        "maximum": 100
+                      },
+                      "maxItems": 64
+                    },
+                    "parameters5": {
+                      "type": "array",
+                      "items": {
+                        "type": "number",
+                        "minimum": -100,
+                        "maximum": 100
+                      },
+                      "maxItems": 64
+                    },
+                    "ignoreReviewsBeforeDate": {
+                      "type": "string",
+                      "maxLength": 10
+                    },
+                    "parameterSearch": {
+                      "type": "string",
+                      "maxLength": 65536
+                    }
+                  },
+                  "required": [
+                    "desiredRetention",
+                    "parameters",
+                    "historicalRetention",
+                    "parameters4",
+                    "parameters5",
+                    "ignoreReviewsBeforeDate",
+                    "parameterSearch"
+                  ],
+                  "additionalProperties": false
+                },
+                "burying": {
+                  "type": "object",
+                  "properties": {
+                    "new": {
+                      "type": "boolean"
+                    },
+                    "review": {
+                      "type": "boolean"
+                    },
+                    "interdayLearning": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "new",
+                    "review",
+                    "interdayLearning"
+                  ],
+                  "additionalProperties": false
+                },
+                "audio": {
+                  "type": "object",
+                  "properties": {
+                    "autoplay": {
+                      "type": "boolean"
+                    },
+                    "replayQuestionOnAnswer": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "autoplay",
+                    "replayQuestionOnAnswer"
+                  ],
+                  "additionalProperties": false
+                },
+                "timer": {
+                  "type": "object",
+                  "properties": {
+                    "maximumAnswerSeconds": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9999
+                    },
+                    "show": {
+                      "type": "boolean"
+                    },
+                    "stopOnAnswer": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "maximumAnswerSeconds",
+                    "show",
+                    "stopOnAnswer"
+                  ],
+                  "additionalProperties": false
+                },
+                "autoAdvance": {
+                  "type": "object",
+                  "properties": {
+                    "questionSeconds": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 9999
+                    },
+                    "answerSeconds": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 9999
+                    },
+                    "questionAction": {
+                      "type": "string",
+                      "enum": [
+                        "showAnswer",
+                        "showReminder"
+                      ]
+                    },
+                    "answerAction": {
+                      "type": "string",
+                      "enum": [
+                        "bury",
+                        "again",
+                        "good",
+                        "hard",
+                        "showReminder"
+                      ]
+                    },
+                    "waitForAudio": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "questionSeconds",
+                    "answerSeconds",
+                    "questionAction",
+                    "answerAction",
+                    "waitForAudio"
+                  ],
+                  "additionalProperties": false
+                },
+                "easyDays": {
+                  "type": "array",
+                  "items": {
+                    "type": "number",
+                    "enum": [
+                      0,
+                      0.5,
+                      1
+                    ]
+                  },
+                  "maxItems": 7
+                },
+                "advanced": {
+                  "type": "object",
+                  "properties": {
+                    "maximumIntervalDays": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 36500
+                    },
+                    "startingEase": {
+                      "type": "number",
+                      "minimum": 1.309999942779541,
+                      "maximum": 5
+                    },
+                    "easyBonus": {
+                      "type": "number",
+                      "minimum": 1,
+                      "maximum": 5
+                    },
+                    "intervalModifier": {
+                      "type": "number",
+                      "minimum": 0.5,
+                      "maximum": 2
+                    },
+                    "hardInterval": {
+                      "type": "number",
+                      "minimum": 0.5,
+                      "maximum": 1.3
+                    },
+                    "newInterval": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "customScheduling": {
+                      "type": "string",
+                      "maxLength": 1048576
+                    }
+                  },
+                  "required": [
+                    "maximumIntervalDays",
+                    "startingEase",
+                    "easyBonus",
+                    "intervalModifier",
+                    "hardInterval",
+                    "newInterval",
+                    "customScheduling"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "id",
+                "name",
+                "dailyLimits",
+                "newCards",
+                "lapses",
+                "displayOrder",
+                "fsrs",
+                "burying",
+                "audio",
+                "timer",
+                "autoAdvance",
+                "easyDays",
+                "advanced"
+              ],
+              "additionalProperties": false
+            },
+            "maxItems": 10000
+          },
+          "defaults": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "name": {
+                "type": "string",
+                "maxLength": 255
+              },
+              "dailyLimits": {
+                "type": "object",
+                "properties": {
+                  "new": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9999
+                  },
+                  "review": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9999
+                  },
+                  "newIgnoresReviewLimit": {
+                    "type": "boolean"
+                  },
+                  "limitsStartFromTop": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "new",
+                  "review",
+                  "newIgnoresReviewLimit",
+                  "limitsStartFromTop"
+                ],
+                "additionalProperties": false
+              },
+              "newCards": {
+                "type": "object",
+                "properties": {
+                  "stepsMinutes": {
+                    "type": "array",
+                    "items": {
+                      "type": "number",
+                      "minimum": 0.016666666666666666,
+                      "maximum": 35791396
+                    },
+                    "maxItems": 32
+                  },
+                  "graduatingIntervalDays": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 36500
+                  },
+                  "easyIntervalDays": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 36500
+                  },
+                  "insertionOrder": {
+                    "type": "string",
+                    "enum": [
+                      "sequential",
+                      "random"
+                    ]
+                  }
+                },
+                "required": [
+                  "stepsMinutes",
+                  "graduatingIntervalDays",
+                  "easyIntervalDays",
+                  "insertionOrder"
+                ],
+                "additionalProperties": false
+              },
+              "lapses": {
+                "type": "object",
+                "properties": {
+                  "stepsMinutes": {
+                    "type": "array",
+                    "items": {
+                      "type": "number",
+                      "minimum": 0.016666666666666666,
+                      "maximum": 35791396
+                    },
+                    "maxItems": 32
+                  },
+                  "minimumIntervalDays": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 36500
+                  },
+                  "leechThreshold": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 9999
+                  },
+                  "leechAction": {
+                    "type": "string",
+                    "enum": [
+                      "suspend",
+                      "tagOnly"
+                    ]
+                  }
+                },
+                "required": [
+                  "stepsMinutes",
+                  "minimumIntervalDays",
+                  "leechThreshold",
+                  "leechAction"
+                ],
+                "additionalProperties": false
+              },
+              "displayOrder": {
+                "type": "object",
+                "properties": {
+                  "newGather": {
+                    "type": "string",
+                    "enum": [
+                      "deck",
+                      "deckThenRandomNotes",
+                      "ascendingPosition",
+                      "descendingPosition",
+                      "randomNotes",
+                      "randomCards"
+                    ]
+                  },
+                  "newSort": {
+                    "type": "string",
+                    "enum": [
+                      "templateThenPosition",
+                      "templateThenRandom",
+                      "position",
+                      "randomNoteThenTemplate",
+                      "random"
+                    ]
+                  },
+                  "newReview": {
+                    "type": "string",
+                    "enum": [
+                      "mix",
+                      "afterReviews",
+                      "beforeReviews"
+                    ]
+                  },
+                  "interdayLearningReview": {
+                    "type": "string",
+                    "enum": [
+                      "mix",
+                      "afterReviews",
+                      "beforeReviews"
+                    ]
+                  },
+                  "reviewSort": {
+                    "type": "string",
+                    "enum": [
+                      "due",
+                      "dueThenDeck",
+                      "deckThenDue",
+                      "intervalAscending",
+                      "intervalDescending",
+                      "easeAscending",
+                      "easeDescending",
+                      "retrievabilityAscending",
+                      "random",
+                      "added",
+                      "reverseAdded",
+                      "retrievabilityDescending",
+                      "relativeOverdueness"
+                    ]
+                  }
+                },
+                "required": [
+                  "newGather",
+                  "newSort",
+                  "newReview",
+                  "interdayLearningReview",
+                  "reviewSort"
+                ],
+                "additionalProperties": false
+              },
+              "fsrs": {
+                "type": "object",
+                "properties": {
+                  "desiredRetention": {
+                    "type": "number",
+                    "minimum": 0.699999988079071,
+                    "maximum": 0.9900000095367432
+                  },
+                  "parameters": {
+                    "type": "array",
+                    "items": {
+                      "type": "number",
+                      "minimum": -100,
+                      "maximum": 100
+                    },
+                    "maxItems": 64
+                  },
+                  "historicalRetention": {
+                    "type": "number",
+                    "minimum": 0.699999988079071,
+                    "maximum": 0.9700000286102295
+                  },
+                  "parameters4": {
+                    "type": "array",
+                    "items": {
+                      "type": "number",
+                      "minimum": -100,
+                      "maximum": 100
+                    },
+                    "maxItems": 64
+                  },
+                  "parameters5": {
+                    "type": "array",
+                    "items": {
+                      "type": "number",
+                      "minimum": -100,
+                      "maximum": 100
+                    },
+                    "maxItems": 64
+                  },
+                  "ignoreReviewsBeforeDate": {
+                    "type": "string",
+                    "maxLength": 10
+                  },
+                  "parameterSearch": {
+                    "type": "string",
+                    "maxLength": 65536
+                  }
+                },
+                "required": [
+                  "desiredRetention",
+                  "parameters",
+                  "historicalRetention",
+                  "parameters4",
+                  "parameters5",
+                  "ignoreReviewsBeforeDate",
+                  "parameterSearch"
+                ],
+                "additionalProperties": false
+              },
+              "burying": {
+                "type": "object",
+                "properties": {
+                  "new": {
+                    "type": "boolean"
+                  },
+                  "review": {
+                    "type": "boolean"
+                  },
+                  "interdayLearning": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "new",
+                  "review",
+                  "interdayLearning"
+                ],
+                "additionalProperties": false
+              },
+              "audio": {
+                "type": "object",
+                "properties": {
+                  "autoplay": {
+                    "type": "boolean"
+                  },
+                  "replayQuestionOnAnswer": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "autoplay",
+                  "replayQuestionOnAnswer"
+                ],
+                "additionalProperties": false
+              },
+              "timer": {
+                "type": "object",
+                "properties": {
+                  "maximumAnswerSeconds": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 9999
+                  },
+                  "show": {
+                    "type": "boolean"
+                  },
+                  "stopOnAnswer": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "maximumAnswerSeconds",
+                  "show",
+                  "stopOnAnswer"
+                ],
+                "additionalProperties": false
+              },
+              "autoAdvance": {
+                "type": "object",
+                "properties": {
+                  "questionSeconds": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 9999
+                  },
+                  "answerSeconds": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 9999
+                  },
+                  "questionAction": {
+                    "type": "string",
+                    "enum": [
+                      "showAnswer",
+                      "showReminder"
+                    ]
+                  },
+                  "answerAction": {
+                    "type": "string",
+                    "enum": [
+                      "bury",
+                      "again",
+                      "good",
+                      "hard",
+                      "showReminder"
+                    ]
+                  },
+                  "waitForAudio": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "questionSeconds",
+                  "answerSeconds",
+                  "questionAction",
+                  "answerAction",
+                  "waitForAudio"
+                ],
+                "additionalProperties": false
+              },
+              "easyDays": {
+                "type": "array",
+                "items": {
+                  "type": "number",
+                  "enum": [
+                    0,
+                    0.5,
+                    1
+                  ]
+                },
+                "maxItems": 7
+              },
+              "advanced": {
+                "type": "object",
+                "properties": {
+                  "maximumIntervalDays": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 36500
+                  },
+                  "startingEase": {
+                    "type": "number",
+                    "minimum": 1.309999942779541,
+                    "maximum": 5
+                  },
+                  "easyBonus": {
+                    "type": "number",
+                    "minimum": 1,
+                    "maximum": 5
+                  },
+                  "intervalModifier": {
+                    "type": "number",
+                    "minimum": 0.5,
+                    "maximum": 2
+                  },
+                  "hardInterval": {
+                    "type": "number",
+                    "minimum": 0.5,
+                    "maximum": 1.3
+                  },
+                  "newInterval": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  },
+                  "customScheduling": {
+                    "type": "string",
+                    "maxLength": 1048576
+                  }
+                },
+                "required": [
+                  "maximumIntervalDays",
+                  "startingEase",
+                  "easyBonus",
+                  "intervalModifier",
+                  "hardInterval",
+                  "newInterval",
+                  "customScheduling"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "dailyLimits",
+              "newCards",
+              "lapses",
+              "displayOrder",
+              "fsrs",
+              "burying",
+              "audio",
+              "timer",
+              "autoAdvance",
+              "easyDays",
+              "advanced"
+            ],
+            "additionalProperties": false
+          },
+          "deckLimits": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "new": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 9999
+              },
+              "review": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 9999
+              },
+              "desiredRetention": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0.699999988079071,
+                "maximum": 0.9900000095367432
+              }
+            },
+            "required": [
+              "new",
+              "review",
+              "desiredRetention"
+            ],
+            "additionalProperties": false
+          },
+          "todayLimits": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "new": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 9999
+              },
+              "review": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 9999
+              },
+              "newActive": {
+                "type": "boolean"
+              },
+              "reviewActive": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "new",
+              "review",
+              "newActive",
+              "reviewActive"
+            ],
+            "additionalProperties": false
+          },
+          "parentPresetIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "maxItems": 10000
+          },
+          "fsrsEnabled": {
+            "type": "boolean"
+          },
+          "fsrsHealthCheck": {
+            "type": "boolean"
+          },
+          "fsrsLegacyEvaluate": {
+            "type": "boolean"
+          },
+          "schemaModified": {
+            "type": "boolean"
+          },
+          "daysSinceLastFsrsOptimize": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "deckId",
+          "config",
+          "presets",
+          "presetConfigs",
+          "defaults",
+          "deckLimits",
+          "todayLimits",
+          "parentPresetIds",
+          "fsrsEnabled",
+          "fsrsHealthCheck",
+          "fsrsLegacyEvaluate",
+          "schemaModified",
+          "daysSinceLastFsrsOptimize"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "deckOptions.update",
+      "description": "Save a native preset and independent overrides, optionally applying to subdecks and rescheduling.",
+      "mutating": true,
+      "longOperation": true,
+      "params": {
+        "type": "object",
+        "properties": {
+          "deckId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "config": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "name": {
+                "type": "string",
+                "maxLength": 255
+              },
+              "dailyLimits": {
+                "type": "object",
+                "properties": {
+                  "new": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9999
+                  },
+                  "review": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9999
+                  },
+                  "newIgnoresReviewLimit": {
+                    "type": "boolean"
+                  },
+                  "limitsStartFromTop": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "new",
+                  "review",
+                  "newIgnoresReviewLimit",
+                  "limitsStartFromTop"
+                ],
+                "additionalProperties": false
+              },
+              "newCards": {
+                "type": "object",
+                "properties": {
+                  "stepsMinutes": {
+                    "type": "array",
+                    "items": {
+                      "type": "number",
+                      "minimum": 0.016666666666666666,
+                      "maximum": 35791396
+                    },
+                    "maxItems": 32
+                  },
+                  "graduatingIntervalDays": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 36500
+                  },
+                  "easyIntervalDays": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 36500
+                  },
+                  "insertionOrder": {
+                    "type": "string",
+                    "enum": [
+                      "sequential",
+                      "random"
+                    ]
+                  }
+                },
+                "required": [
+                  "stepsMinutes",
+                  "graduatingIntervalDays",
+                  "easyIntervalDays",
+                  "insertionOrder"
+                ],
+                "additionalProperties": false
+              },
+              "lapses": {
+                "type": "object",
+                "properties": {
+                  "stepsMinutes": {
+                    "type": "array",
+                    "items": {
+                      "type": "number",
+                      "minimum": 0.016666666666666666,
+                      "maximum": 35791396
+                    },
+                    "maxItems": 32
+                  },
+                  "minimumIntervalDays": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 36500
+                  },
+                  "leechThreshold": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 9999
+                  },
+                  "leechAction": {
+                    "type": "string",
+                    "enum": [
+                      "suspend",
+                      "tagOnly"
+                    ]
+                  }
+                },
+                "required": [
+                  "stepsMinutes",
+                  "minimumIntervalDays",
+                  "leechThreshold",
+                  "leechAction"
+                ],
+                "additionalProperties": false
+              },
+              "displayOrder": {
+                "type": "object",
+                "properties": {
+                  "newGather": {
+                    "type": "string",
+                    "enum": [
+                      "deck",
+                      "deckThenRandomNotes",
+                      "ascendingPosition",
+                      "descendingPosition",
+                      "randomNotes",
+                      "randomCards"
+                    ]
+                  },
+                  "newSort": {
+                    "type": "string",
+                    "enum": [
+                      "templateThenPosition",
+                      "templateThenRandom",
+                      "position",
+                      "randomNoteThenTemplate",
+                      "random"
+                    ]
+                  },
+                  "newReview": {
+                    "type": "string",
+                    "enum": [
+                      "mix",
+                      "afterReviews",
+                      "beforeReviews"
+                    ]
+                  },
+                  "interdayLearningReview": {
+                    "type": "string",
+                    "enum": [
+                      "mix",
+                      "afterReviews",
+                      "beforeReviews"
+                    ]
+                  },
+                  "reviewSort": {
+                    "type": "string",
+                    "enum": [
+                      "due",
+                      "dueThenDeck",
+                      "deckThenDue",
+                      "intervalAscending",
+                      "intervalDescending",
+                      "easeAscending",
+                      "easeDescending",
+                      "retrievabilityAscending",
+                      "random",
+                      "added",
+                      "reverseAdded",
+                      "retrievabilityDescending",
+                      "relativeOverdueness"
+                    ]
+                  }
+                },
+                "required": [
+                  "newGather",
+                  "newSort",
+                  "newReview",
+                  "interdayLearningReview",
+                  "reviewSort"
+                ],
+                "additionalProperties": false
+              },
+              "fsrs": {
+                "type": "object",
+                "properties": {
+                  "desiredRetention": {
+                    "type": "number",
+                    "minimum": 0.699999988079071,
+                    "maximum": 0.9900000095367432
+                  },
+                  "parameters": {
+                    "type": "array",
+                    "items": {
+                      "type": "number",
+                      "minimum": -100,
+                      "maximum": 100
+                    },
+                    "maxItems": 64
+                  },
+                  "historicalRetention": {
+                    "type": "number",
+                    "minimum": 0.699999988079071,
+                    "maximum": 0.9700000286102295
+                  },
+                  "parameters4": {
+                    "type": "array",
+                    "items": {
+                      "type": "number",
+                      "minimum": -100,
+                      "maximum": 100
+                    },
+                    "maxItems": 64
+                  },
+                  "parameters5": {
+                    "type": "array",
+                    "items": {
+                      "type": "number",
+                      "minimum": -100,
+                      "maximum": 100
+                    },
+                    "maxItems": 64
+                  },
+                  "ignoreReviewsBeforeDate": {
+                    "type": "string",
+                    "maxLength": 10
+                  },
+                  "parameterSearch": {
+                    "type": "string",
+                    "maxLength": 65536
+                  }
+                },
+                "required": [
+                  "desiredRetention",
+                  "parameters",
+                  "historicalRetention",
+                  "parameters4",
+                  "parameters5",
+                  "ignoreReviewsBeforeDate",
+                  "parameterSearch"
+                ],
+                "additionalProperties": false
+              },
+              "burying": {
+                "type": "object",
+                "properties": {
+                  "new": {
+                    "type": "boolean"
+                  },
+                  "review": {
+                    "type": "boolean"
+                  },
+                  "interdayLearning": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "new",
+                  "review",
+                  "interdayLearning"
+                ],
+                "additionalProperties": false
+              },
+              "audio": {
+                "type": "object",
+                "properties": {
+                  "autoplay": {
+                    "type": "boolean"
+                  },
+                  "replayQuestionOnAnswer": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "autoplay",
+                  "replayQuestionOnAnswer"
+                ],
+                "additionalProperties": false
+              },
+              "timer": {
+                "type": "object",
+                "properties": {
+                  "maximumAnswerSeconds": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 9999
+                  },
+                  "show": {
+                    "type": "boolean"
+                  },
+                  "stopOnAnswer": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "maximumAnswerSeconds",
+                  "show",
+                  "stopOnAnswer"
+                ],
+                "additionalProperties": false
+              },
+              "autoAdvance": {
+                "type": "object",
+                "properties": {
+                  "questionSeconds": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 9999
+                  },
+                  "answerSeconds": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 9999
+                  },
+                  "questionAction": {
+                    "type": "string",
+                    "enum": [
+                      "showAnswer",
+                      "showReminder"
+                    ]
+                  },
+                  "answerAction": {
+                    "type": "string",
+                    "enum": [
+                      "bury",
+                      "again",
+                      "good",
+                      "hard",
+                      "showReminder"
+                    ]
+                  },
+                  "waitForAudio": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "questionSeconds",
+                  "answerSeconds",
+                  "questionAction",
+                  "answerAction",
+                  "waitForAudio"
+                ],
+                "additionalProperties": false
+              },
+              "easyDays": {
+                "type": "array",
+                "items": {
+                  "type": "number",
+                  "enum": [
+                    0,
+                    0.5,
+                    1
+                  ]
+                },
+                "maxItems": 7
+              },
+              "advanced": {
+                "type": "object",
+                "properties": {
+                  "maximumIntervalDays": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 36500
+                  },
+                  "startingEase": {
+                    "type": "number",
+                    "minimum": 1.309999942779541,
+                    "maximum": 5
+                  },
+                  "easyBonus": {
+                    "type": "number",
+                    "minimum": 1,
+                    "maximum": 5
+                  },
+                  "intervalModifier": {
+                    "type": "number",
+                    "minimum": 0.5,
+                    "maximum": 2
+                  },
+                  "hardInterval": {
+                    "type": "number",
+                    "minimum": 0.5,
+                    "maximum": 1.3
+                  },
+                  "newInterval": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  },
+                  "customScheduling": {
+                    "type": "string",
+                    "maxLength": 1048576
+                  }
+                },
+                "required": [
+                  "maximumIntervalDays",
+                  "startingEase",
+                  "easyBonus",
+                  "intervalModifier",
+                  "hardInterval",
+                  "newInterval",
+                  "customScheduling"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "dailyLimits",
+              "newCards",
+              "lapses",
+              "displayOrder",
+              "fsrs",
+              "burying",
+              "audio",
+              "timer",
+              "autoAdvance",
+              "easyDays",
+              "advanced"
+            ],
+            "additionalProperties": false
+          },
+          "deckLimits": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "new": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 9999
+              },
+              "review": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 9999
+              },
+              "desiredRetention": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0.699999988079071,
+                "maximum": 0.9900000095367432
+              }
+            },
+            "required": [
+              "new",
+              "review",
+              "desiredRetention"
+            ],
+            "additionalProperties": false
+          },
+          "todayLimits": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "new": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 9999
+              },
+              "review": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 9999
+              },
+              "newActive": {
+                "type": "boolean"
+              },
+              "reviewActive": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "new",
+              "review",
+              "newActive",
+              "reviewActive"
+            ],
+            "additionalProperties": false
+          },
+          "applyToChildren": {
+            "type": "boolean"
+          },
+          "fsrsEnabled": {
+            "type": "boolean"
+          },
+          "fsrsHealthCheck": {
+            "type": "boolean"
+          },
+          "reschedule": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "deckId",
+          "config",
+          "deckLimits",
+          "todayLimits",
+          "applyToChildren",
+          "fsrsEnabled"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "operationId": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "changes": {
+            "type": "object",
+            "properties": {
+              "card": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "boolean"
+              },
+              "deck": {
+                "type": "boolean"
+              },
+              "tag": {
+                "type": "boolean"
+              },
+              "notetype": {
+                "type": "boolean"
+              },
+              "config": {
+                "type": "boolean"
+              },
+              "deckConfig": {
+                "type": "boolean"
+              },
+              "mtime": {
+                "type": "boolean"
+              },
+              "browserTable": {
+                "type": "boolean"
+              },
+              "noteText": {
+                "type": "boolean"
+              },
+              "studyQueues": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "card",
+              "note",
+              "deck",
+              "tag",
+              "notetype",
+              "config",
+              "deckConfig",
+              "mtime",
+              "browserTable",
+              "noteText",
+              "studyQueues"
+            ],
+            "additionalProperties": false
+          },
+          "undo": {
+            "type": "object",
+            "properties": {
+              "canUndo": {
+                "type": "boolean"
+              },
+              "undoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "canRedo": {
+                "type": "boolean"
+              },
+              "redoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "revision": {
+                "type": "string",
+                "maxLength": 256
+              }
+            },
+            "required": [
+              "canUndo",
+              "undoLabel",
+              "canRedo",
+              "redoLabel"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "operationId",
+          "changes",
+          "undo"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "deckOptions.presetAdd",
+      "description": "Create a named preset with defaults.",
+      "mutating": true,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 255
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "presetId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "changes": {
+            "type": "object",
+            "properties": {
+              "card": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "boolean"
+              },
+              "deck": {
+                "type": "boolean"
+              },
+              "tag": {
+                "type": "boolean"
+              },
+              "notetype": {
+                "type": "boolean"
+              },
+              "config": {
+                "type": "boolean"
+              },
+              "deckConfig": {
+                "type": "boolean"
+              },
+              "mtime": {
+                "type": "boolean"
+              },
+              "browserTable": {
+                "type": "boolean"
+              },
+              "noteText": {
+                "type": "boolean"
+              },
+              "studyQueues": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "card",
+              "note",
+              "deck",
+              "tag",
+              "notetype",
+              "config",
+              "deckConfig",
+              "mtime",
+              "browserTable",
+              "noteText",
+              "studyQueues"
+            ],
+            "additionalProperties": false
+          },
+          "undo": {
+            "type": "object",
+            "properties": {
+              "canUndo": {
+                "type": "boolean"
+              },
+              "undoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "canRedo": {
+                "type": "boolean"
+              },
+              "redoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "revision": {
+                "type": "string",
+                "maxLength": 256
+              }
+            },
+            "required": [
+              "canUndo",
+              "undoLabel",
+              "canRedo",
+              "redoLabel"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "presetId",
+          "changes",
+          "undo"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "deckOptions.presetClone",
+      "description": "Clone a preset under a new name.",
+      "mutating": true,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {
+          "presetId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 255
+          }
+        },
+        "required": [
+          "presetId",
+          "name"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "presetId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "changes": {
+            "type": "object",
+            "properties": {
+              "card": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "boolean"
+              },
+              "deck": {
+                "type": "boolean"
+              },
+              "tag": {
+                "type": "boolean"
+              },
+              "notetype": {
+                "type": "boolean"
+              },
+              "config": {
+                "type": "boolean"
+              },
+              "deckConfig": {
+                "type": "boolean"
+              },
+              "mtime": {
+                "type": "boolean"
+              },
+              "browserTable": {
+                "type": "boolean"
+              },
+              "noteText": {
+                "type": "boolean"
+              },
+              "studyQueues": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "card",
+              "note",
+              "deck",
+              "tag",
+              "notetype",
+              "config",
+              "deckConfig",
+              "mtime",
+              "browserTable",
+              "noteText",
+              "studyQueues"
+            ],
+            "additionalProperties": false
+          },
+          "undo": {
+            "type": "object",
+            "properties": {
+              "canUndo": {
+                "type": "boolean"
+              },
+              "undoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "canRedo": {
+                "type": "boolean"
+              },
+              "redoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "revision": {
+                "type": "string",
+                "maxLength": 256
+              }
+            },
+            "required": [
+              "canUndo",
+              "undoLabel",
+              "canRedo",
+              "redoLabel"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "presetId",
+          "changes",
+          "undo"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "deckOptions.presetRename",
+      "description": "Rename a deck-options preset.",
+      "mutating": true,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {
+          "presetId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 255
+          }
+        },
+        "required": [
+          "presetId",
+          "name"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "changes": {
+            "type": "object",
+            "properties": {
+              "card": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "boolean"
+              },
+              "deck": {
+                "type": "boolean"
+              },
+              "tag": {
+                "type": "boolean"
+              },
+              "notetype": {
+                "type": "boolean"
+              },
+              "config": {
+                "type": "boolean"
+              },
+              "deckConfig": {
+                "type": "boolean"
+              },
+              "mtime": {
+                "type": "boolean"
+              },
+              "browserTable": {
+                "type": "boolean"
+              },
+              "noteText": {
+                "type": "boolean"
+              },
+              "studyQueues": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "card",
+              "note",
+              "deck",
+              "tag",
+              "notetype",
+              "config",
+              "deckConfig",
+              "mtime",
+              "browserTable",
+              "noteText",
+              "studyQueues"
+            ],
+            "additionalProperties": false
+          },
+          "undo": {
+            "type": "object",
+            "properties": {
+              "canUndo": {
+                "type": "boolean"
+              },
+              "undoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "canRedo": {
+                "type": "boolean"
+              },
+              "redoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "revision": {
+                "type": "string",
+                "maxLength": 256
+              }
+            },
+            "required": [
+              "canUndo",
+              "undoLabel",
+              "canRedo",
+              "redoLabel"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "changes",
+          "undo"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "deckOptions.presetRemove",
+      "description": "Delete a preset and explicitly reassign its decks.",
+      "mutating": true,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {
+          "presetId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "replacementPresetId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "presetId",
+          "replacementPresetId"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "changes": {
+            "type": "object",
+            "properties": {
+              "card": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "boolean"
+              },
+              "deck": {
+                "type": "boolean"
+              },
+              "tag": {
+                "type": "boolean"
+              },
+              "notetype": {
+                "type": "boolean"
+              },
+              "config": {
+                "type": "boolean"
+              },
+              "deckConfig": {
+                "type": "boolean"
+              },
+              "mtime": {
+                "type": "boolean"
+              },
+              "browserTable": {
+                "type": "boolean"
+              },
+              "noteText": {
+                "type": "boolean"
+              },
+              "studyQueues": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "card",
+              "note",
+              "deck",
+              "tag",
+              "notetype",
+              "config",
+              "deckConfig",
+              "mtime",
+              "browserTable",
+              "noteText",
+              "studyQueues"
+            ],
+            "additionalProperties": false
+          },
+          "undo": {
+            "type": "object",
+            "properties": {
+              "canUndo": {
+                "type": "boolean"
+              },
+              "undoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "canRedo": {
+                "type": "boolean"
+              },
+              "redoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "revision": {
+                "type": "string",
+                "maxLength": 256
+              }
+            },
+            "required": [
+              "canUndo",
+              "undoLabel",
+              "canRedo",
+              "redoLabel"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "changes",
+          "undo"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "deckOptions.presetAssign",
+      "description": "Assign a preset to selected decks.",
+      "mutating": true,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {
+          "deckIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "maxItems": 100000
+          },
+          "presetId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "deckIds",
+          "presetId"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "changes": {
+            "type": "object",
+            "properties": {
+              "card": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "boolean"
+              },
+              "deck": {
+                "type": "boolean"
+              },
+              "tag": {
+                "type": "boolean"
+              },
+              "notetype": {
+                "type": "boolean"
+              },
+              "config": {
+                "type": "boolean"
+              },
+              "deckConfig": {
+                "type": "boolean"
+              },
+              "mtime": {
+                "type": "boolean"
+              },
+              "browserTable": {
+                "type": "boolean"
+              },
+              "noteText": {
+                "type": "boolean"
+              },
+              "studyQueues": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "card",
+              "note",
+              "deck",
+              "tag",
+              "notetype",
+              "config",
+              "deckConfig",
+              "mtime",
+              "browserTable",
+              "noteText",
+              "studyQueues"
+            ],
+            "additionalProperties": false
+          },
+          "undo": {
+            "type": "object",
+            "properties": {
+              "canUndo": {
+                "type": "boolean"
+              },
+              "undoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "canRedo": {
+                "type": "boolean"
+              },
+              "redoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "revision": {
+                "type": "string",
+                "maxLength": 256
+              }
+            },
+            "required": [
+              "canUndo",
+              "undoLabel",
+              "canRedo",
+              "redoLabel"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "changes",
+          "undo"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ]
+}

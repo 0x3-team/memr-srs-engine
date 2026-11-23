@@ -1,0 +1,129 @@
+{
+  "version": 1,
+  "area": "engine",
+  "methods": [
+    {
+      "name": "engine.status",
+      "description": "Report engine availability, collection state and public versions.",
+      "mutating": false,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "state": {
+            "type": "string",
+            "enum": [
+              "missing",
+              "starting",
+              "ready",
+              "busy",
+              "failed",
+              "stopped"
+            ]
+          },
+          "engineVersion": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 255
+          },
+          "contractVersion": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1
+          },
+          "collectionOpen": {
+            "type": "boolean"
+          },
+          "mediaPrefix": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 2048
+          },
+          "message": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 4096
+          }
+        },
+        "required": [
+          "state",
+          "engineVersion",
+          "contractVersion",
+          "collectionOpen",
+          "mediaPrefix",
+          "message"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "engine.describe",
+      "description": "List the versioned methods implemented by this engine.",
+      "mutating": false,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1
+          },
+          "methods": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "maxLength": 255
+                },
+                "description": {
+                  "type": "string",
+                  "maxLength": 4096
+                },
+                "mutating": {
+                  "type": "boolean"
+                },
+                "longOperation": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "name",
+                "description",
+                "mutating",
+                "longOperation"
+              ],
+              "additionalProperties": false
+            },
+            "maxItems": 1000
+          }
+        },
+        "required": [
+          "version",
+          "methods"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ]
+}

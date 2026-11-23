@@ -1,0 +1,1506 @@
+{
+  "version": 1,
+  "area": "fsrs",
+  "methods": [
+    {
+      "name": "fsrs.getPreferences",
+      "description": "Read native collection-wide load balancing and short-term FSRS switches.",
+      "mutating": false,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "loadBalancerEnabled": {
+            "type": "boolean"
+          },
+          "shortTermWithStepsEnabled": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "loadBalancerEnabled",
+          "shortTermWithStepsEnabled"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "fsrs.setPreferences",
+      "description": "Save native load balancing and short-term FSRS switches as one undoable change, optionally guarding the previous values.",
+      "mutating": true,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {
+          "loadBalancerEnabled": {
+            "type": "boolean"
+          },
+          "shortTermWithStepsEnabled": {
+            "type": "boolean"
+          },
+          "expected": {
+            "type": "object",
+            "properties": {
+              "loadBalancerEnabled": {
+                "type": "boolean"
+              },
+              "shortTermWithStepsEnabled": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "loadBalancerEnabled",
+              "shortTermWithStepsEnabled"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "loadBalancerEnabled",
+          "shortTermWithStepsEnabled"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "changes": {
+            "type": "object",
+            "properties": {
+              "card": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "boolean"
+              },
+              "deck": {
+                "type": "boolean"
+              },
+              "tag": {
+                "type": "boolean"
+              },
+              "notetype": {
+                "type": "boolean"
+              },
+              "config": {
+                "type": "boolean"
+              },
+              "deckConfig": {
+                "type": "boolean"
+              },
+              "mtime": {
+                "type": "boolean"
+              },
+              "browserTable": {
+                "type": "boolean"
+              },
+              "noteText": {
+                "type": "boolean"
+              },
+              "studyQueues": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "card",
+              "note",
+              "deck",
+              "tag",
+              "notetype",
+              "config",
+              "deckConfig",
+              "mtime",
+              "browserTable",
+              "noteText",
+              "studyQueues"
+            ],
+            "additionalProperties": false
+          },
+          "undo": {
+            "type": "object",
+            "properties": {
+              "canUndo": {
+                "type": "boolean"
+              },
+              "undoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "canRedo": {
+                "type": "boolean"
+              },
+              "redoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "revision": {
+                "type": "string",
+                "maxLength": 256
+              }
+            },
+            "required": [
+              "canUndo",
+              "undoLabel",
+              "canRedo",
+              "redoLabel"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "changes",
+          "undo"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "fsrs.optimizeAll",
+      "description": "Optimize each saved preset using its search and cutoff, reporting successes and failures individually.",
+      "mutating": true,
+      "longOperation": true,
+      "params": {
+        "type": "object",
+        "properties": {
+          "deckId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "reschedule": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "deckId"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "operationId": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "changes": {
+            "type": "object",
+            "properties": {
+              "card": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "boolean"
+              },
+              "deck": {
+                "type": "boolean"
+              },
+              "tag": {
+                "type": "boolean"
+              },
+              "notetype": {
+                "type": "boolean"
+              },
+              "config": {
+                "type": "boolean"
+              },
+              "deckConfig": {
+                "type": "boolean"
+              },
+              "mtime": {
+                "type": "boolean"
+              },
+              "browserTable": {
+                "type": "boolean"
+              },
+              "noteText": {
+                "type": "boolean"
+              },
+              "studyQueues": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "card",
+              "note",
+              "deck",
+              "tag",
+              "notetype",
+              "config",
+              "deckConfig",
+              "mtime",
+              "browserTable",
+              "noteText",
+              "studyQueues"
+            ],
+            "additionalProperties": false
+          },
+          "undo": {
+            "type": "object",
+            "properties": {
+              "canUndo": {
+                "type": "boolean"
+              },
+              "undoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "canRedo": {
+                "type": "boolean"
+              },
+              "redoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "revision": {
+                "type": "string",
+                "maxLength": 256
+              }
+            },
+            "required": [
+              "canUndo",
+              "undoLabel",
+              "canRedo",
+              "redoLabel"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "operationId",
+          "changes",
+          "undo"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "fsrs.historyCount",
+      "description": "Count the native included and total reviews for a search and history cutoff.",
+      "mutating": false,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {
+          "search": {
+            "type": "string",
+            "maxLength": 65536
+          },
+          "ignoreReviewsBeforeDate": {
+            "type": "string",
+            "maxLength": 10
+          }
+        },
+        "required": [
+          "search",
+          "ignoreReviewsBeforeDate"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "included": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "total": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "included",
+          "total"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "fsrs.retentionWorkload",
+      "description": "Compute Anki's native relative workload curve for desired retention.",
+      "mutating": false,
+      "longOperation": true,
+      "params": {
+        "type": "object",
+        "properties": {
+          "search": {
+            "type": "string",
+            "maxLength": 65536
+          },
+          "parameters": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "minimum": -100,
+              "maximum": 100
+            },
+            "maxItems": 64
+          }
+        },
+        "required": [
+          "search",
+          "parameters"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "operationId": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "changes": {
+            "type": "object",
+            "properties": {
+              "card": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "boolean"
+              },
+              "deck": {
+                "type": "boolean"
+              },
+              "tag": {
+                "type": "boolean"
+              },
+              "notetype": {
+                "type": "boolean"
+              },
+              "config": {
+                "type": "boolean"
+              },
+              "deckConfig": {
+                "type": "boolean"
+              },
+              "mtime": {
+                "type": "boolean"
+              },
+              "browserTable": {
+                "type": "boolean"
+              },
+              "noteText": {
+                "type": "boolean"
+              },
+              "studyQueues": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "card",
+              "note",
+              "deck",
+              "tag",
+              "notetype",
+              "config",
+              "deckConfig",
+              "mtime",
+              "browserTable",
+              "noteText",
+              "studyQueues"
+            ],
+            "additionalProperties": false
+          },
+          "undo": {
+            "type": "object",
+            "properties": {
+              "canUndo": {
+                "type": "boolean"
+              },
+              "undoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "canRedo": {
+                "type": "boolean"
+              },
+              "redoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "revision": {
+                "type": "string",
+                "maxLength": 256
+              }
+            },
+            "required": [
+              "canUndo",
+              "undoLabel",
+              "canRedo",
+              "redoLabel"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "operationId",
+          "changes",
+          "undo"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "fsrs.simulateWorkload",
+      "description": "Simulate native workload, reviews and memorized cards across retention targets on a disposable collection.",
+      "mutating": false,
+      "longOperation": true,
+      "params": {
+        "type": "object",
+        "properties": {
+          "deckId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "parameters": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "minimum": -100,
+              "maximum": 100
+            },
+            "maxItems": 64
+          },
+          "desiredRetention": {
+            "type": "number",
+            "minimum": 0.699999988079071,
+            "maximum": 0.9900000095367432
+          },
+          "days": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 36500
+          },
+          "newCardsPerDay": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "reviewLimit": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "maximumIntervalDays": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 36500
+          },
+          "easyDays": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "enum": [
+                0,
+                0.5,
+                1
+              ]
+            },
+            "maxItems": 7
+          },
+          "additionalNewCards": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100000
+          },
+          "newIgnoresReviewLimit": {
+            "type": "boolean"
+          },
+          "reviewOrder": {
+            "type": "string",
+            "enum": [
+              "due",
+              "dueThenDeck",
+              "deckThenDue",
+              "intervalAscending",
+              "intervalDescending",
+              "easeAscending",
+              "easeDescending",
+              "retrievabilityAscending",
+              "random",
+              "added",
+              "reverseAdded",
+              "retrievabilityDescending",
+              "relativeOverdueness"
+            ]
+          },
+          "suspendAfterLapses": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1,
+            "maximum": 1000
+          },
+          "historicalRetention": {
+            "type": "number",
+            "minimum": 0.699999988079071,
+            "maximum": 0.9700000286102295
+          },
+          "learningSteps": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 32
+          },
+          "relearningSteps": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 32
+          }
+        },
+        "required": [
+          "deckId",
+          "parameters",
+          "desiredRetention",
+          "days",
+          "newCardsPerDay",
+          "reviewLimit",
+          "maximumIntervalDays",
+          "easyDays"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "operationId": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "changes": {
+            "type": "object",
+            "properties": {
+              "card": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "boolean"
+              },
+              "deck": {
+                "type": "boolean"
+              },
+              "tag": {
+                "type": "boolean"
+              },
+              "notetype": {
+                "type": "boolean"
+              },
+              "config": {
+                "type": "boolean"
+              },
+              "deckConfig": {
+                "type": "boolean"
+              },
+              "mtime": {
+                "type": "boolean"
+              },
+              "browserTable": {
+                "type": "boolean"
+              },
+              "noteText": {
+                "type": "boolean"
+              },
+              "studyQueues": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "card",
+              "note",
+              "deck",
+              "tag",
+              "notetype",
+              "config",
+              "deckConfig",
+              "mtime",
+              "browserTable",
+              "noteText",
+              "studyQueues"
+            ],
+            "additionalProperties": false
+          },
+          "undo": {
+            "type": "object",
+            "properties": {
+              "canUndo": {
+                "type": "boolean"
+              },
+              "undoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "canRedo": {
+                "type": "boolean"
+              },
+              "redoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "revision": {
+                "type": "string",
+                "maxLength": 256
+              }
+            },
+            "required": [
+              "canUndo",
+              "undoLabel",
+              "canRedo",
+              "redoLabel"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "operationId",
+          "changes",
+          "undo"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "fsrs.optimize",
+      "description": "Optimize FSRS parameters against selected review history.",
+      "mutating": true,
+      "longOperation": true,
+      "params": {
+        "type": "object",
+        "properties": {
+          "presetId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "search": {
+            "type": "string",
+            "maxLength": 65536
+          },
+          "ignoreReviewsBefore": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "reschedule": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "presetId",
+          "search"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "operationId": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "changes": {
+            "type": "object",
+            "properties": {
+              "card": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "boolean"
+              },
+              "deck": {
+                "type": "boolean"
+              },
+              "tag": {
+                "type": "boolean"
+              },
+              "notetype": {
+                "type": "boolean"
+              },
+              "config": {
+                "type": "boolean"
+              },
+              "deckConfig": {
+                "type": "boolean"
+              },
+              "mtime": {
+                "type": "boolean"
+              },
+              "browserTable": {
+                "type": "boolean"
+              },
+              "noteText": {
+                "type": "boolean"
+              },
+              "studyQueues": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "card",
+              "note",
+              "deck",
+              "tag",
+              "notetype",
+              "config",
+              "deckConfig",
+              "mtime",
+              "browserTable",
+              "noteText",
+              "studyQueues"
+            ],
+            "additionalProperties": false
+          },
+          "undo": {
+            "type": "object",
+            "properties": {
+              "canUndo": {
+                "type": "boolean"
+              },
+              "undoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "canRedo": {
+                "type": "boolean"
+              },
+              "redoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "revision": {
+                "type": "string",
+                "maxLength": 256
+              }
+            },
+            "required": [
+              "canUndo",
+              "undoLabel",
+              "canRedo",
+              "redoLabel"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "operationId",
+          "changes",
+          "undo"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "fsrs.evaluate",
+      "description": "Evaluate explicit parameters or native time-series cross-validation; report the actual mode.",
+      "mutating": false,
+      "longOperation": true,
+      "params": {
+        "type": "object",
+        "properties": {
+          "search": {
+            "type": "string",
+            "maxLength": 65536
+          },
+          "ignoreReviewsBefore": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "parameters": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "minimum": -100,
+              "maximum": 100
+            },
+            "maxItems": 64
+          }
+        },
+        "required": [
+          "search"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "operationId": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "changes": {
+            "type": "object",
+            "properties": {
+              "card": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "boolean"
+              },
+              "deck": {
+                "type": "boolean"
+              },
+              "tag": {
+                "type": "boolean"
+              },
+              "notetype": {
+                "type": "boolean"
+              },
+              "config": {
+                "type": "boolean"
+              },
+              "deckConfig": {
+                "type": "boolean"
+              },
+              "mtime": {
+                "type": "boolean"
+              },
+              "browserTable": {
+                "type": "boolean"
+              },
+              "noteText": {
+                "type": "boolean"
+              },
+              "studyQueues": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "card",
+              "note",
+              "deck",
+              "tag",
+              "notetype",
+              "config",
+              "deckConfig",
+              "mtime",
+              "browserTable",
+              "noteText",
+              "studyQueues"
+            ],
+            "additionalProperties": false
+          },
+          "undo": {
+            "type": "object",
+            "properties": {
+              "canUndo": {
+                "type": "boolean"
+              },
+              "undoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "canRedo": {
+                "type": "boolean"
+              },
+              "redoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "revision": {
+                "type": "string",
+                "maxLength": 256
+              }
+            },
+            "required": [
+              "canUndo",
+              "undoLabel",
+              "canRedo",
+              "redoLabel"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "operationId",
+          "changes",
+          "undo"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "fsrs.simulate",
+      "description": "Simulate daily reviews, new cards, memorized cards and time cost on a disposable collection.",
+      "mutating": false,
+      "longOperation": true,
+      "params": {
+        "type": "object",
+        "properties": {
+          "deckId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "parameters": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "minimum": -100,
+              "maximum": 100
+            },
+            "maxItems": 64
+          },
+          "desiredRetention": {
+            "type": "number",
+            "minimum": 0.699999988079071,
+            "maximum": 0.9900000095367432
+          },
+          "days": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 36500
+          },
+          "newCardsPerDay": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "reviewLimit": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "maximumIntervalDays": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 36500
+          },
+          "easyDays": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "enum": [
+                0,
+                0.5,
+                1
+              ]
+            },
+            "maxItems": 7
+          },
+          "additionalNewCards": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100000
+          },
+          "newIgnoresReviewLimit": {
+            "type": "boolean"
+          },
+          "reviewOrder": {
+            "type": "string",
+            "enum": [
+              "due",
+              "dueThenDeck",
+              "deckThenDue",
+              "intervalAscending",
+              "intervalDescending",
+              "easeAscending",
+              "easeDescending",
+              "retrievabilityAscending",
+              "random",
+              "added",
+              "reverseAdded",
+              "retrievabilityDescending",
+              "relativeOverdueness"
+            ]
+          },
+          "suspendAfterLapses": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1,
+            "maximum": 1000
+          },
+          "historicalRetention": {
+            "type": "number",
+            "minimum": 0.699999988079071,
+            "maximum": 0.9700000286102295
+          },
+          "learningSteps": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 32
+          },
+          "relearningSteps": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 32
+          }
+        },
+        "required": [
+          "deckId",
+          "parameters",
+          "desiredRetention",
+          "days",
+          "newCardsPerDay",
+          "reviewLimit",
+          "maximumIntervalDays",
+          "easyDays"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "operationId": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "changes": {
+            "type": "object",
+            "properties": {
+              "card": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "boolean"
+              },
+              "deck": {
+                "type": "boolean"
+              },
+              "tag": {
+                "type": "boolean"
+              },
+              "notetype": {
+                "type": "boolean"
+              },
+              "config": {
+                "type": "boolean"
+              },
+              "deckConfig": {
+                "type": "boolean"
+              },
+              "mtime": {
+                "type": "boolean"
+              },
+              "browserTable": {
+                "type": "boolean"
+              },
+              "noteText": {
+                "type": "boolean"
+              },
+              "studyQueues": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "card",
+              "note",
+              "deck",
+              "tag",
+              "notetype",
+              "config",
+              "deckConfig",
+              "mtime",
+              "browserTable",
+              "noteText",
+              "studyQueues"
+            ],
+            "additionalProperties": false
+          },
+          "undo": {
+            "type": "object",
+            "properties": {
+              "canUndo": {
+                "type": "boolean"
+              },
+              "undoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "canRedo": {
+                "type": "boolean"
+              },
+              "redoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "revision": {
+                "type": "string",
+                "maxLength": 256
+              }
+            },
+            "required": [
+              "canUndo",
+              "undoLabel",
+              "canRedo",
+              "redoLabel"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "operationId",
+          "changes",
+          "undo"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "fsrs.optimalRetention",
+      "description": "Estimate native optimal retention with optional complete simulation settings; no history cutoff is implied.",
+      "mutating": false,
+      "longOperation": true,
+      "params": {
+        "type": "object",
+        "properties": {
+          "search": {
+            "type": "string",
+            "maxLength": 65536
+          },
+          "parameters": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "minimum": -100,
+              "maximum": 100
+            },
+            "maxItems": 64
+          },
+          "settings": {
+            "type": "object",
+            "properties": {
+              "parameters": {
+                "type": "array",
+                "items": {
+                  "type": "number",
+                  "minimum": -100,
+                  "maximum": 100
+                },
+                "maxItems": 64
+              },
+              "desiredRetention": {
+                "type": "number",
+                "minimum": 0.699999988079071,
+                "maximum": 0.9900000095367432
+              },
+              "days": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 36500
+              },
+              "newCardsPerDay": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 4294967295
+              },
+              "reviewLimit": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 4294967295
+              },
+              "maximumIntervalDays": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 36500
+              },
+              "easyDays": {
+                "type": "array",
+                "items": {
+                  "type": "number",
+                  "enum": [
+                    0,
+                    0.5,
+                    1
+                  ]
+                },
+                "maxItems": 7
+              },
+              "additionalNewCards": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 100000
+              },
+              "newIgnoresReviewLimit": {
+                "type": "boolean"
+              },
+              "reviewOrder": {
+                "type": "string",
+                "enum": [
+                  "due",
+                  "dueThenDeck",
+                  "deckThenDue",
+                  "intervalAscending",
+                  "intervalDescending",
+                  "easeAscending",
+                  "easeDescending",
+                  "retrievabilityAscending",
+                  "random",
+                  "added",
+                  "reverseAdded",
+                  "retrievabilityDescending",
+                  "relativeOverdueness"
+                ]
+              },
+              "suspendAfterLapses": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 1,
+                "maximum": 1000
+              },
+              "historicalRetention": {
+                "type": "number",
+                "minimum": 0.699999988079071,
+                "maximum": 0.9700000286102295
+              },
+              "learningSteps": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 32
+              },
+              "relearningSteps": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 32
+              }
+            },
+            "required": [
+              "parameters",
+              "desiredRetention",
+              "days",
+              "newCardsPerDay",
+              "reviewLimit",
+              "maximumIntervalDays",
+              "easyDays",
+              "additionalNewCards",
+              "newIgnoresReviewLimit",
+              "reviewOrder",
+              "suspendAfterLapses",
+              "historicalRetention",
+              "learningSteps",
+              "relearningSteps"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "search"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "operationId": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "changes": {
+            "type": "object",
+            "properties": {
+              "card": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "boolean"
+              },
+              "deck": {
+                "type": "boolean"
+              },
+              "tag": {
+                "type": "boolean"
+              },
+              "notetype": {
+                "type": "boolean"
+              },
+              "config": {
+                "type": "boolean"
+              },
+              "deckConfig": {
+                "type": "boolean"
+              },
+              "mtime": {
+                "type": "boolean"
+              },
+              "browserTable": {
+                "type": "boolean"
+              },
+              "noteText": {
+                "type": "boolean"
+              },
+              "studyQueues": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "card",
+              "note",
+              "deck",
+              "tag",
+              "notetype",
+              "config",
+              "deckConfig",
+              "mtime",
+              "browserTable",
+              "noteText",
+              "studyQueues"
+            ],
+            "additionalProperties": false
+          },
+          "undo": {
+            "type": "object",
+            "properties": {
+              "canUndo": {
+                "type": "boolean"
+              },
+              "undoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "canRedo": {
+                "type": "boolean"
+              },
+              "redoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "revision": {
+                "type": "string",
+                "maxLength": 256
+              }
+            },
+            "required": [
+              "canUndo",
+              "undoLabel",
+              "canRedo",
+              "redoLabel"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "operationId",
+          "changes",
+          "undo"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "fsrs.memoryState",
+      "description": "Compute native FSRS memory and retrievability without persisting scheduling caches.",
+      "mutating": false,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {
+          "cardId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "cardId"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": [
+          "object",
+          "null"
+        ],
+        "properties": {
+          "stability": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1.7976931348623157e+308
+          },
+          "difficulty": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 10
+          },
+          "retrievability": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 1
+          },
+          "desiredRetention": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "decay": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        },
+        "required": [
+          "stability",
+          "difficulty",
+          "retrievability",
+          "desiredRetention",
+          "decay"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ]
+}

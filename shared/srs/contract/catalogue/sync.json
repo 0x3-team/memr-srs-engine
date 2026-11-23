@@ -1,0 +1,839 @@
+{
+  "version": 1,
+  "area": "sync",
+  "methods": [
+    {
+      "name": "sync.status",
+      "description": "Read sync endpoint and conflict summary without returning credentials.",
+      "mutating": false,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "loggedIn": {
+            "type": "boolean"
+          },
+          "endpoint": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 2048
+          },
+          "username": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 255
+          },
+          "lastSyncAt": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "required": {
+            "type": "string",
+            "enum": [
+              "none",
+              "normal",
+              "full",
+              "upload",
+              "download"
+            ]
+          },
+          "local": {
+            "type": "object",
+            "properties": {
+              "notes": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "cards": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "modifiedAt": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              }
+            },
+            "required": [
+              "notes",
+              "cards",
+              "modifiedAt"
+            ],
+            "additionalProperties": false
+          },
+          "remote": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "notes": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "cards": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "modifiedAt": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              }
+            },
+            "required": [
+              "notes",
+              "cards",
+              "modifiedAt"
+            ],
+            "additionalProperties": false
+          },
+          "mediaPending": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "loggedIn",
+          "endpoint",
+          "username",
+          "lastSyncAt",
+          "required",
+          "local",
+          "remote",
+          "mediaPending"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "sync.login",
+      "description": "Authenticate to an allowed Anki-protocol server; AnkiWeb hosts are refused.",
+      "mutating": true,
+      "longOperation": true,
+      "params": {
+        "type": "object",
+        "properties": {
+          "endpoint": {
+            "type": "string",
+            "maxLength": 2048
+          },
+          "username": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "password": {
+            "type": "string",
+            "maxLength": 4096
+          }
+        },
+        "required": [
+          "endpoint",
+          "username",
+          "password"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "operationId": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "changes": {
+            "type": "object",
+            "properties": {
+              "card": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "boolean"
+              },
+              "deck": {
+                "type": "boolean"
+              },
+              "tag": {
+                "type": "boolean"
+              },
+              "notetype": {
+                "type": "boolean"
+              },
+              "config": {
+                "type": "boolean"
+              },
+              "deckConfig": {
+                "type": "boolean"
+              },
+              "mtime": {
+                "type": "boolean"
+              },
+              "browserTable": {
+                "type": "boolean"
+              },
+              "noteText": {
+                "type": "boolean"
+              },
+              "studyQueues": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "card",
+              "note",
+              "deck",
+              "tag",
+              "notetype",
+              "config",
+              "deckConfig",
+              "mtime",
+              "browserTable",
+              "noteText",
+              "studyQueues"
+            ],
+            "additionalProperties": false
+          },
+          "undo": {
+            "type": "object",
+            "properties": {
+              "canUndo": {
+                "type": "boolean"
+              },
+              "undoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "canRedo": {
+                "type": "boolean"
+              },
+              "redoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "revision": {
+                "type": "string",
+                "maxLength": 256
+              }
+            },
+            "required": [
+              "canUndo",
+              "undoLabel",
+              "canRedo",
+              "redoLabel"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "operationId",
+          "changes",
+          "undo"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "sync.logout",
+      "description": "Forget the saved sync credentials.",
+      "mutating": true,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "changes": {
+            "type": "object",
+            "properties": {
+              "card": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "boolean"
+              },
+              "deck": {
+                "type": "boolean"
+              },
+              "tag": {
+                "type": "boolean"
+              },
+              "notetype": {
+                "type": "boolean"
+              },
+              "config": {
+                "type": "boolean"
+              },
+              "deckConfig": {
+                "type": "boolean"
+              },
+              "mtime": {
+                "type": "boolean"
+              },
+              "browserTable": {
+                "type": "boolean"
+              },
+              "noteText": {
+                "type": "boolean"
+              },
+              "studyQueues": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "card",
+              "note",
+              "deck",
+              "tag",
+              "notetype",
+              "config",
+              "deckConfig",
+              "mtime",
+              "browserTable",
+              "noteText",
+              "studyQueues"
+            ],
+            "additionalProperties": false
+          },
+          "undo": {
+            "type": "object",
+            "properties": {
+              "canUndo": {
+                "type": "boolean"
+              },
+              "undoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "canRedo": {
+                "type": "boolean"
+              },
+              "redoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "revision": {
+                "type": "string",
+                "maxLength": 256
+              }
+            },
+            "required": [
+              "canUndo",
+              "undoLabel",
+              "canRedo",
+              "redoLabel"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "changes",
+          "undo"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "sync.run",
+      "description": "Run normal collection sync or report that a full-sync choice is required.",
+      "mutating": true,
+      "longOperation": true,
+      "params": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "operationId": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "changes": {
+            "type": "object",
+            "properties": {
+              "card": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "boolean"
+              },
+              "deck": {
+                "type": "boolean"
+              },
+              "tag": {
+                "type": "boolean"
+              },
+              "notetype": {
+                "type": "boolean"
+              },
+              "config": {
+                "type": "boolean"
+              },
+              "deckConfig": {
+                "type": "boolean"
+              },
+              "mtime": {
+                "type": "boolean"
+              },
+              "browserTable": {
+                "type": "boolean"
+              },
+              "noteText": {
+                "type": "boolean"
+              },
+              "studyQueues": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "card",
+              "note",
+              "deck",
+              "tag",
+              "notetype",
+              "config",
+              "deckConfig",
+              "mtime",
+              "browserTable",
+              "noteText",
+              "studyQueues"
+            ],
+            "additionalProperties": false
+          },
+          "undo": {
+            "type": "object",
+            "properties": {
+              "canUndo": {
+                "type": "boolean"
+              },
+              "undoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "canRedo": {
+                "type": "boolean"
+              },
+              "redoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "revision": {
+                "type": "string",
+                "maxLength": 256
+              }
+            },
+            "required": [
+              "canUndo",
+              "undoLabel",
+              "canRedo",
+              "redoLabel"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "operationId",
+          "changes",
+          "undo"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "sync.resolveFullSync",
+      "description": "Perform the user's explicit upload or download conflict choice.",
+      "mutating": true,
+      "longOperation": true,
+      "params": {
+        "type": "object",
+        "properties": {
+          "direction": {
+            "type": "string",
+            "enum": [
+              "upload",
+              "download"
+            ]
+          }
+        },
+        "required": [
+          "direction"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "operationId": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "changes": {
+            "type": "object",
+            "properties": {
+              "card": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "boolean"
+              },
+              "deck": {
+                "type": "boolean"
+              },
+              "tag": {
+                "type": "boolean"
+              },
+              "notetype": {
+                "type": "boolean"
+              },
+              "config": {
+                "type": "boolean"
+              },
+              "deckConfig": {
+                "type": "boolean"
+              },
+              "mtime": {
+                "type": "boolean"
+              },
+              "browserTable": {
+                "type": "boolean"
+              },
+              "noteText": {
+                "type": "boolean"
+              },
+              "studyQueues": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "card",
+              "note",
+              "deck",
+              "tag",
+              "notetype",
+              "config",
+              "deckConfig",
+              "mtime",
+              "browserTable",
+              "noteText",
+              "studyQueues"
+            ],
+            "additionalProperties": false
+          },
+          "undo": {
+            "type": "object",
+            "properties": {
+              "canUndo": {
+                "type": "boolean"
+              },
+              "undoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "canRedo": {
+                "type": "boolean"
+              },
+              "redoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "revision": {
+                "type": "string",
+                "maxLength": 256
+              }
+            },
+            "required": [
+              "canUndo",
+              "undoLabel",
+              "canRedo",
+              "redoLabel"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "operationId",
+          "changes",
+          "undo"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "sync.media",
+      "description": "Synchronize media with progress and cancellation.",
+      "mutating": true,
+      "longOperation": true,
+      "params": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "operationId": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "changes": {
+            "type": "object",
+            "properties": {
+              "card": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "boolean"
+              },
+              "deck": {
+                "type": "boolean"
+              },
+              "tag": {
+                "type": "boolean"
+              },
+              "notetype": {
+                "type": "boolean"
+              },
+              "config": {
+                "type": "boolean"
+              },
+              "deckConfig": {
+                "type": "boolean"
+              },
+              "mtime": {
+                "type": "boolean"
+              },
+              "browserTable": {
+                "type": "boolean"
+              },
+              "noteText": {
+                "type": "boolean"
+              },
+              "studyQueues": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "card",
+              "note",
+              "deck",
+              "tag",
+              "notetype",
+              "config",
+              "deckConfig",
+              "mtime",
+              "browserTable",
+              "noteText",
+              "studyQueues"
+            ],
+            "additionalProperties": false
+          },
+          "undo": {
+            "type": "object",
+            "properties": {
+              "canUndo": {
+                "type": "boolean"
+              },
+              "undoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "canRedo": {
+                "type": "boolean"
+              },
+              "redoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "revision": {
+                "type": "string",
+                "maxLength": 256
+              }
+            },
+            "required": [
+              "canUndo",
+              "undoLabel",
+              "canRedo",
+              "redoLabel"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "operationId",
+          "changes",
+          "undo"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "sync.abort",
+      "description": "Request cancellation of the active sync operation.",
+      "mutating": true,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "changes": {
+            "type": "object",
+            "properties": {
+              "card": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "boolean"
+              },
+              "deck": {
+                "type": "boolean"
+              },
+              "tag": {
+                "type": "boolean"
+              },
+              "notetype": {
+                "type": "boolean"
+              },
+              "config": {
+                "type": "boolean"
+              },
+              "deckConfig": {
+                "type": "boolean"
+              },
+              "mtime": {
+                "type": "boolean"
+              },
+              "browserTable": {
+                "type": "boolean"
+              },
+              "noteText": {
+                "type": "boolean"
+              },
+              "studyQueues": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "card",
+              "note",
+              "deck",
+              "tag",
+              "notetype",
+              "config",
+              "deckConfig",
+              "mtime",
+              "browserTable",
+              "noteText",
+              "studyQueues"
+            ],
+            "additionalProperties": false
+          },
+          "undo": {
+            "type": "object",
+            "properties": {
+              "canUndo": {
+                "type": "boolean"
+              },
+              "undoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "canRedo": {
+                "type": "boolean"
+              },
+              "redoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "revision": {
+                "type": "string",
+                "maxLength": 256
+              }
+            },
+            "required": [
+              "canUndo",
+              "undoLabel",
+              "canRedo",
+              "redoLabel"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "changes",
+          "undo"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,2570 @@
+{
+  "version": 1,
+  "area": "study",
+  "methods": [
+    {
+      "name": "study.overview",
+      "description": "Read deck counts, description, buried cards and study limits.",
+      "mutating": false,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {
+          "deckId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "deckId"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "deckId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 1024
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 1048576
+          },
+          "counts": {
+            "type": "object",
+            "properties": {
+              "new": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "learning": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "review": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              }
+            },
+            "required": [
+              "new",
+              "learning",
+              "review"
+            ],
+            "additionalProperties": false
+          },
+          "buried": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "suspended": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "newLimitReached": {
+            "type": "boolean"
+          },
+          "reviewLimitReached": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "deckId",
+          "name",
+          "description",
+          "counts",
+          "buried",
+          "suspended",
+          "newLimitReached",
+          "reviewLimitReached"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "study.next",
+      "description": "Render the current queued card, or null when the session is finished.",
+      "mutating": false,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {
+          "deckId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "deckId"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": [
+          "object",
+          "null"
+        ],
+        "properties": {
+          "cardId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "noteId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "ord": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 65535
+          },
+          "deckId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "queue": {
+            "type": "number",
+            "enum": [
+              -3,
+              -2,
+              -1,
+              0,
+              1,
+              2,
+              3,
+              4
+            ]
+          },
+          "questionHtml": {
+            "type": "string",
+            "maxLength": 1048576
+          },
+          "answerHtml": {
+            "type": "string",
+            "maxLength": 1048576
+          },
+          "css": {
+            "type": "string",
+            "maxLength": 1048576
+          },
+          "bodyClass": {
+            "type": "string",
+            "maxLength": 1024
+          },
+          "av": {
+            "type": "object",
+            "properties": {
+              "question": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "type": "string",
+                      "enum": [
+                        "sound",
+                        "tts"
+                      ]
+                    },
+                    "filename": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "maxLength": 1024
+                    },
+                    "text": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "maxLength": 1048576
+                    },
+                    "language": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "maxLength": 255
+                    },
+                    "voices": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "maxLength": 255
+                      },
+                      "maxItems": 32
+                    },
+                    "speed": {
+                      "type": "number",
+                      "minimum": 0.1,
+                      "maximum": 10
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "filename",
+                    "text",
+                    "language",
+                    "voices",
+                    "speed"
+                  ],
+                  "additionalProperties": false
+                },
+                "maxItems": 128
+              },
+              "answer": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "type": "string",
+                      "enum": [
+                        "sound",
+                        "tts"
+                      ]
+                    },
+                    "filename": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "maxLength": 1024
+                    },
+                    "text": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "maxLength": 1048576
+                    },
+                    "language": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "maxLength": 255
+                    },
+                    "voices": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "maxLength": 255
+                      },
+                      "maxItems": 32
+                    },
+                    "speed": {
+                      "type": "number",
+                      "minimum": 0.1,
+                      "maximum": 10
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "filename",
+                    "text",
+                    "language",
+                    "voices",
+                    "speed"
+                  ],
+                  "additionalProperties": false
+                },
+                "maxItems": 128
+              }
+            },
+            "required": [
+              "question",
+              "answer"
+            ],
+            "additionalProperties": false
+          },
+          "typeAnswer": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "field": {
+                "type": "string",
+                "maxLength": 255
+              },
+              "correct": {
+                "type": "string",
+                "maxLength": 1048576
+              },
+              "font": {
+                "type": "string",
+                "maxLength": 255
+              },
+              "size": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 200
+              }
+            },
+            "required": [
+              "field",
+              "correct",
+              "font",
+              "size"
+            ],
+            "additionalProperties": false
+          },
+          "autoplay": {
+            "type": "boolean"
+          },
+          "replayQuestionOnAnswer": {
+            "type": "boolean"
+          },
+          "timer": {
+            "type": "object",
+            "properties": {
+              "show": {
+                "type": "boolean"
+              },
+              "limitSeconds": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9999
+              }
+            },
+            "required": [
+              "show",
+              "limitSeconds"
+            ],
+            "additionalProperties": false
+          },
+          "autoAdvance": {
+            "type": "object",
+            "properties": {
+              "enabled": {
+                "type": "boolean"
+              },
+              "questionSeconds": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 3600
+              },
+              "answerSeconds": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 3600
+              },
+              "questionAction": {
+                "type": "string",
+                "enum": [
+                  "showAnswer",
+                  "none"
+                ]
+              },
+              "answerAction": {
+                "type": "string",
+                "enum": [
+                  "again",
+                  "hard",
+                  "good",
+                  "easy",
+                  "bury",
+                  "none"
+                ]
+              },
+              "waitForAudio": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "enabled",
+              "questionSeconds",
+              "answerSeconds",
+              "questionAction",
+              "answerAction",
+              "waitForAudio"
+            ],
+            "additionalProperties": false
+          },
+          "nextStates": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "rating": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 4
+                },
+                "label": {
+                  "type": "string",
+                  "maxLength": 255
+                },
+                "secondsUntilDue": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                }
+              },
+              "required": [
+                "rating",
+                "label",
+                "secondsUntilDue"
+              ],
+              "additionalProperties": false
+            },
+            "maxItems": 4
+          },
+          "counts": {
+            "type": "object",
+            "properties": {
+              "new": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "learning": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "review": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              }
+            },
+            "required": [
+              "new",
+              "learning",
+              "review"
+            ],
+            "additionalProperties": false
+          },
+          "flags": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 7
+          },
+          "marked": {
+            "type": "boolean"
+          },
+          "source": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "pageId": {
+                "type": "string",
+                "maxLength": 256
+              },
+              "blockId": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 256
+              },
+              "revision": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 64
+              },
+              "uri": {
+                "type": "string",
+                "maxLength": 2048
+              },
+              "changed": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "pageId",
+              "blockId",
+              "revision",
+              "uri",
+              "changed"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "cardId",
+          "noteId",
+          "ord",
+          "deckId",
+          "queue",
+          "questionHtml",
+          "answerHtml",
+          "css",
+          "bodyClass",
+          "av",
+          "typeAnswer",
+          "autoplay",
+          "replayQuestionOnAnswer",
+          "timer",
+          "autoAdvance",
+          "nextStates",
+          "counts",
+          "flags",
+          "marked",
+          "source"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "study.answer",
+      "description": "Commit a rating using the shown card's scheduling snapshot and report leech actions.",
+      "mutating": true,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {
+          "cardId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "rating": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4
+          },
+          "elapsedSeconds": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1.7976931348623157e+308
+          },
+          "stateToken": {
+            "type": "string",
+            "maxLength": 256
+          }
+        },
+        "required": [
+          "cardId",
+          "rating",
+          "elapsedSeconds"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "counts": {
+            "type": "object",
+            "properties": {
+              "new": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "learning": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "review": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              }
+            },
+            "required": [
+              "new",
+              "learning",
+              "review"
+            ],
+            "additionalProperties": false
+          },
+          "leech": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "tagged": {
+                "type": "boolean"
+              },
+              "suspended": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "tagged",
+              "suspended"
+            ],
+            "additionalProperties": false
+          },
+          "changes": {
+            "type": "object",
+            "properties": {
+              "card": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "boolean"
+              },
+              "deck": {
+                "type": "boolean"
+              },
+              "tag": {
+                "type": "boolean"
+              },
+              "notetype": {
+                "type": "boolean"
+              },
+              "config": {
+                "type": "boolean"
+              },
+              "deckConfig": {
+                "type": "boolean"
+              },
+              "mtime": {
+                "type": "boolean"
+              },
+              "browserTable": {
+                "type": "boolean"
+              },
+              "noteText": {
+                "type": "boolean"
+              },
+              "studyQueues": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "card",
+              "note",
+              "deck",
+              "tag",
+              "notetype",
+              "config",
+              "deckConfig",
+              "mtime",
+              "browserTable",
+              "noteText",
+              "studyQueues"
+            ],
+            "additionalProperties": false
+          },
+          "undo": {
+            "type": "object",
+            "properties": {
+              "canUndo": {
+                "type": "boolean"
+              },
+              "undoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "canRedo": {
+                "type": "boolean"
+              },
+              "redoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "revision": {
+                "type": "string",
+                "maxLength": 256
+              }
+            },
+            "required": [
+              "canUndo",
+              "undoLabel",
+              "canRedo",
+              "redoLabel"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "counts",
+          "leech",
+          "changes",
+          "undo"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "study.replayAnswers",
+      "description": "Apply journaled answers to each card's current state in order, skipping missing, suspended or buried cards.",
+      "mutating": true,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {
+          "answers": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "maxLength": 255
+                },
+                "cardId": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "rating": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 4
+                },
+                "elapsedSeconds": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1.7976931348623157e+308
+                },
+                "answeredAt": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1.7976931348623157e+308
+                }
+              },
+              "required": [
+                "id",
+                "cardId",
+                "rating",
+                "elapsedSeconds",
+                "answeredAt"
+              ],
+              "additionalProperties": false
+            },
+            "maxItems": 10000
+          }
+        },
+        "required": [
+          "answers"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "applied": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 255
+            },
+            "maxItems": 10000
+          },
+          "skipped": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "maxLength": 255
+                },
+                "reason": {
+                  "type": "string",
+                  "enum": [
+                    "missing",
+                    "suspended",
+                    "buried",
+                    "failed"
+                  ]
+                }
+              },
+              "required": [
+                "id",
+                "reason"
+              ],
+              "additionalProperties": false
+            },
+            "maxItems": 10000
+          },
+          "changes": {
+            "type": "object",
+            "properties": {
+              "card": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "boolean"
+              },
+              "deck": {
+                "type": "boolean"
+              },
+              "tag": {
+                "type": "boolean"
+              },
+              "notetype": {
+                "type": "boolean"
+              },
+              "config": {
+                "type": "boolean"
+              },
+              "deckConfig": {
+                "type": "boolean"
+              },
+              "mtime": {
+                "type": "boolean"
+              },
+              "browserTable": {
+                "type": "boolean"
+              },
+              "noteText": {
+                "type": "boolean"
+              },
+              "studyQueues": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "card",
+              "note",
+              "deck",
+              "tag",
+              "notetype",
+              "config",
+              "deckConfig",
+              "mtime",
+              "browserTable",
+              "noteText",
+              "studyQueues"
+            ],
+            "additionalProperties": false
+          },
+          "undo": {
+            "type": "object",
+            "properties": {
+              "canUndo": {
+                "type": "boolean"
+              },
+              "undoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "canRedo": {
+                "type": "boolean"
+              },
+              "redoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "revision": {
+                "type": "string",
+                "maxLength": 256
+              }
+            },
+            "required": [
+              "canUndo",
+              "undoLabel",
+              "canRedo",
+              "redoLabel"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "applied",
+          "skipped",
+          "changes",
+          "undo"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "study.undo",
+      "description": "Undo the latest undoable collection operation, optionally guarding its revision.",
+      "mutating": true,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {
+          "expectedRevision": {
+            "type": "string",
+            "maxLength": 256
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "card": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "cardId": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "noteId": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "ord": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 65535
+              },
+              "deckId": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "queue": {
+                "type": "number",
+                "enum": [
+                  -3,
+                  -2,
+                  -1,
+                  0,
+                  1,
+                  2,
+                  3,
+                  4
+                ]
+              },
+              "questionHtml": {
+                "type": "string",
+                "maxLength": 1048576
+              },
+              "answerHtml": {
+                "type": "string",
+                "maxLength": 1048576
+              },
+              "css": {
+                "type": "string",
+                "maxLength": 1048576
+              },
+              "bodyClass": {
+                "type": "string",
+                "maxLength": 1024
+              },
+              "av": {
+                "type": "object",
+                "properties": {
+                  "question": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "kind": {
+                          "type": "string",
+                          "enum": [
+                            "sound",
+                            "tts"
+                          ]
+                        },
+                        "filename": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "maxLength": 1024
+                        },
+                        "text": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "maxLength": 1048576
+                        },
+                        "language": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "maxLength": 255
+                        },
+                        "voices": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "maxLength": 255
+                          },
+                          "maxItems": 32
+                        },
+                        "speed": {
+                          "type": "number",
+                          "minimum": 0.1,
+                          "maximum": 10
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "filename",
+                        "text",
+                        "language",
+                        "voices",
+                        "speed"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "maxItems": 128
+                  },
+                  "answer": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "kind": {
+                          "type": "string",
+                          "enum": [
+                            "sound",
+                            "tts"
+                          ]
+                        },
+                        "filename": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "maxLength": 1024
+                        },
+                        "text": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "maxLength": 1048576
+                        },
+                        "language": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "maxLength": 255
+                        },
+                        "voices": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "maxLength": 255
+                          },
+                          "maxItems": 32
+                        },
+                        "speed": {
+                          "type": "number",
+                          "minimum": 0.1,
+                          "maximum": 10
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "filename",
+                        "text",
+                        "language",
+                        "voices",
+                        "speed"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "maxItems": 128
+                  }
+                },
+                "required": [
+                  "question",
+                  "answer"
+                ],
+                "additionalProperties": false
+              },
+              "typeAnswer": {
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "properties": {
+                  "field": {
+                    "type": "string",
+                    "maxLength": 255
+                  },
+                  "correct": {
+                    "type": "string",
+                    "maxLength": 1048576
+                  },
+                  "font": {
+                    "type": "string",
+                    "maxLength": 255
+                  },
+                  "size": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 200
+                  }
+                },
+                "required": [
+                  "field",
+                  "correct",
+                  "font",
+                  "size"
+                ],
+                "additionalProperties": false
+              },
+              "autoplay": {
+                "type": "boolean"
+              },
+              "replayQuestionOnAnswer": {
+                "type": "boolean"
+              },
+              "timer": {
+                "type": "object",
+                "properties": {
+                  "show": {
+                    "type": "boolean"
+                  },
+                  "limitSeconds": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9999
+                  }
+                },
+                "required": [
+                  "show",
+                  "limitSeconds"
+                ],
+                "additionalProperties": false
+              },
+              "autoAdvance": {
+                "type": "object",
+                "properties": {
+                  "enabled": {
+                    "type": "boolean"
+                  },
+                  "questionSeconds": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 3600
+                  },
+                  "answerSeconds": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 3600
+                  },
+                  "questionAction": {
+                    "type": "string",
+                    "enum": [
+                      "showAnswer",
+                      "none"
+                    ]
+                  },
+                  "answerAction": {
+                    "type": "string",
+                    "enum": [
+                      "again",
+                      "hard",
+                      "good",
+                      "easy",
+                      "bury",
+                      "none"
+                    ]
+                  },
+                  "waitForAudio": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "enabled",
+                  "questionSeconds",
+                  "answerSeconds",
+                  "questionAction",
+                  "answerAction",
+                  "waitForAudio"
+                ],
+                "additionalProperties": false
+              },
+              "nextStates": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "rating": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 4
+                    },
+                    "label": {
+                      "type": "string",
+                      "maxLength": 255
+                    },
+                    "secondsUntilDue": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    }
+                  },
+                  "required": [
+                    "rating",
+                    "label",
+                    "secondsUntilDue"
+                  ],
+                  "additionalProperties": false
+                },
+                "maxItems": 4
+              },
+              "counts": {
+                "type": "object",
+                "properties": {
+                  "new": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "learning": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "review": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  }
+                },
+                "required": [
+                  "new",
+                  "learning",
+                  "review"
+                ],
+                "additionalProperties": false
+              },
+              "flags": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 7
+              },
+              "marked": {
+                "type": "boolean"
+              },
+              "source": {
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "properties": {
+                  "pageId": {
+                    "type": "string",
+                    "maxLength": 256
+                  },
+                  "blockId": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "maxLength": 256
+                  },
+                  "revision": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "maxLength": 64
+                  },
+                  "uri": {
+                    "type": "string",
+                    "maxLength": 2048
+                  },
+                  "changed": {
+                    "type": [
+                      "boolean",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "pageId",
+                  "blockId",
+                  "revision",
+                  "uri",
+                  "changed"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "cardId",
+              "noteId",
+              "ord",
+              "deckId",
+              "queue",
+              "questionHtml",
+              "answerHtml",
+              "css",
+              "bodyClass",
+              "av",
+              "typeAnswer",
+              "autoplay",
+              "replayQuestionOnAnswer",
+              "timer",
+              "autoAdvance",
+              "nextStates",
+              "counts",
+              "flags",
+              "marked",
+              "source"
+            ],
+            "additionalProperties": false
+          },
+          "changes": {
+            "type": "object",
+            "properties": {
+              "card": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "boolean"
+              },
+              "deck": {
+                "type": "boolean"
+              },
+              "tag": {
+                "type": "boolean"
+              },
+              "notetype": {
+                "type": "boolean"
+              },
+              "config": {
+                "type": "boolean"
+              },
+              "deckConfig": {
+                "type": "boolean"
+              },
+              "mtime": {
+                "type": "boolean"
+              },
+              "browserTable": {
+                "type": "boolean"
+              },
+              "noteText": {
+                "type": "boolean"
+              },
+              "studyQueues": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "card",
+              "note",
+              "deck",
+              "tag",
+              "notetype",
+              "config",
+              "deckConfig",
+              "mtime",
+              "browserTable",
+              "noteText",
+              "studyQueues"
+            ],
+            "additionalProperties": false
+          },
+          "undo": {
+            "type": "object",
+            "properties": {
+              "canUndo": {
+                "type": "boolean"
+              },
+              "undoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "canRedo": {
+                "type": "boolean"
+              },
+              "redoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "revision": {
+                "type": "string",
+                "maxLength": 256
+              }
+            },
+            "required": [
+              "canUndo",
+              "undoLabel",
+              "canRedo",
+              "redoLabel"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "card",
+          "changes",
+          "undo"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "study.redo",
+      "description": "Redo the latest reverted collection operation, optionally guarding its revision.",
+      "mutating": true,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {
+          "expectedRevision": {
+            "type": "string",
+            "maxLength": 256
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "card": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "cardId": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "noteId": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "ord": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 65535
+              },
+              "deckId": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "queue": {
+                "type": "number",
+                "enum": [
+                  -3,
+                  -2,
+                  -1,
+                  0,
+                  1,
+                  2,
+                  3,
+                  4
+                ]
+              },
+              "questionHtml": {
+                "type": "string",
+                "maxLength": 1048576
+              },
+              "answerHtml": {
+                "type": "string",
+                "maxLength": 1048576
+              },
+              "css": {
+                "type": "string",
+                "maxLength": 1048576
+              },
+              "bodyClass": {
+                "type": "string",
+                "maxLength": 1024
+              },
+              "av": {
+                "type": "object",
+                "properties": {
+                  "question": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "kind": {
+                          "type": "string",
+                          "enum": [
+                            "sound",
+                            "tts"
+                          ]
+                        },
+                        "filename": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "maxLength": 1024
+                        },
+                        "text": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "maxLength": 1048576
+                        },
+                        "language": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "maxLength": 255
+                        },
+                        "voices": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "maxLength": 255
+                          },
+                          "maxItems": 32
+                        },
+                        "speed": {
+                          "type": "number",
+                          "minimum": 0.1,
+                          "maximum": 10
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "filename",
+                        "text",
+                        "language",
+                        "voices",
+                        "speed"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "maxItems": 128
+                  },
+                  "answer": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "kind": {
+                          "type": "string",
+                          "enum": [
+                            "sound",
+                            "tts"
+                          ]
+                        },
+                        "filename": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "maxLength": 1024
+                        },
+                        "text": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "maxLength": 1048576
+                        },
+                        "language": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "maxLength": 255
+                        },
+                        "voices": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "maxLength": 255
+                          },
+                          "maxItems": 32
+                        },
+                        "speed": {
+                          "type": "number",
+                          "minimum": 0.1,
+                          "maximum": 10
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "filename",
+                        "text",
+                        "language",
+                        "voices",
+                        "speed"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "maxItems": 128
+                  }
+                },
+                "required": [
+                  "question",
+                  "answer"
+                ],
+                "additionalProperties": false
+              },
+              "typeAnswer": {
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "properties": {
+                  "field": {
+                    "type": "string",
+                    "maxLength": 255
+                  },
+                  "correct": {
+                    "type": "string",
+                    "maxLength": 1048576
+                  },
+                  "font": {
+                    "type": "string",
+                    "maxLength": 255
+                  },
+                  "size": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 200
+                  }
+                },
+                "required": [
+                  "field",
+                  "correct",
+                  "font",
+                  "size"
+                ],
+                "additionalProperties": false
+              },
+              "autoplay": {
+                "type": "boolean"
+              },
+              "replayQuestionOnAnswer": {
+                "type": "boolean"
+              },
+              "timer": {
+                "type": "object",
+                "properties": {
+                  "show": {
+                    "type": "boolean"
+                  },
+                  "limitSeconds": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9999
+                  }
+                },
+                "required": [
+                  "show",
+                  "limitSeconds"
+                ],
+                "additionalProperties": false
+              },
+              "autoAdvance": {
+                "type": "object",
+                "properties": {
+                  "enabled": {
+                    "type": "boolean"
+                  },
+                  "questionSeconds": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 3600
+                  },
+                  "answerSeconds": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 3600
+                  },
+                  "questionAction": {
+                    "type": "string",
+                    "enum": [
+                      "showAnswer",
+                      "none"
+                    ]
+                  },
+                  "answerAction": {
+                    "type": "string",
+                    "enum": [
+                      "again",
+                      "hard",
+                      "good",
+                      "easy",
+                      "bury",
+                      "none"
+                    ]
+                  },
+                  "waitForAudio": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "enabled",
+                  "questionSeconds",
+                  "answerSeconds",
+                  "questionAction",
+                  "answerAction",
+                  "waitForAudio"
+                ],
+                "additionalProperties": false
+              },
+              "nextStates": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "rating": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 4
+                    },
+                    "label": {
+                      "type": "string",
+                      "maxLength": 255
+                    },
+                    "secondsUntilDue": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    }
+                  },
+                  "required": [
+                    "rating",
+                    "label",
+                    "secondsUntilDue"
+                  ],
+                  "additionalProperties": false
+                },
+                "maxItems": 4
+              },
+              "counts": {
+                "type": "object",
+                "properties": {
+                  "new": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "learning": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "review": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  }
+                },
+                "required": [
+                  "new",
+                  "learning",
+                  "review"
+                ],
+                "additionalProperties": false
+              },
+              "flags": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 7
+              },
+              "marked": {
+                "type": "boolean"
+              },
+              "source": {
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "properties": {
+                  "pageId": {
+                    "type": "string",
+                    "maxLength": 256
+                  },
+                  "blockId": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "maxLength": 256
+                  },
+                  "revision": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "maxLength": 64
+                  },
+                  "uri": {
+                    "type": "string",
+                    "maxLength": 2048
+                  },
+                  "changed": {
+                    "type": [
+                      "boolean",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "pageId",
+                  "blockId",
+                  "revision",
+                  "uri",
+                  "changed"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "cardId",
+              "noteId",
+              "ord",
+              "deckId",
+              "queue",
+              "questionHtml",
+              "answerHtml",
+              "css",
+              "bodyClass",
+              "av",
+              "typeAnswer",
+              "autoplay",
+              "replayQuestionOnAnswer",
+              "timer",
+              "autoAdvance",
+              "nextStates",
+              "counts",
+              "flags",
+              "marked",
+              "source"
+            ],
+            "additionalProperties": false
+          },
+          "changes": {
+            "type": "object",
+            "properties": {
+              "card": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "boolean"
+              },
+              "deck": {
+                "type": "boolean"
+              },
+              "tag": {
+                "type": "boolean"
+              },
+              "notetype": {
+                "type": "boolean"
+              },
+              "config": {
+                "type": "boolean"
+              },
+              "deckConfig": {
+                "type": "boolean"
+              },
+              "mtime": {
+                "type": "boolean"
+              },
+              "browserTable": {
+                "type": "boolean"
+              },
+              "noteText": {
+                "type": "boolean"
+              },
+              "studyQueues": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "card",
+              "note",
+              "deck",
+              "tag",
+              "notetype",
+              "config",
+              "deckConfig",
+              "mtime",
+              "browserTable",
+              "noteText",
+              "studyQueues"
+            ],
+            "additionalProperties": false
+          },
+          "undo": {
+            "type": "object",
+            "properties": {
+              "canUndo": {
+                "type": "boolean"
+              },
+              "undoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "canRedo": {
+                "type": "boolean"
+              },
+              "redoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "revision": {
+                "type": "string",
+                "maxLength": 256
+              }
+            },
+            "required": [
+              "canUndo",
+              "undoLabel",
+              "canRedo",
+              "redoLabel"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "card",
+          "changes",
+          "undo"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "study.undoStatus",
+      "description": "Read undo and redo availability and action labels.",
+      "mutating": false,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "canUndo": {
+            "type": "boolean"
+          },
+          "undoLabel": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 255
+          },
+          "canRedo": {
+            "type": "boolean"
+          },
+          "redoLabel": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 255
+          },
+          "revision": {
+            "type": "string",
+            "maxLength": 256
+          }
+        },
+        "required": [
+          "canUndo",
+          "undoLabel",
+          "canRedo",
+          "redoLabel"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "study.compareTypedAnswer",
+      "description": "Use the engine's type-answer comparison for the rendered card.",
+      "mutating": false,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {
+          "cardId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "typedAnswer": {
+            "type": "string",
+            "maxLength": 65536
+          }
+        },
+        "required": [
+          "cardId",
+          "typedAnswer"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "answerHtml": {
+            "type": "string",
+            "maxLength": 1048576
+          },
+          "comparisonHtml": {
+            "type": "string",
+            "maxLength": 1048576
+          }
+        },
+        "required": [
+          "answerHtml",
+          "comparisonHtml"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "study.congratulations",
+      "description": "Read session totals, limits and next-due information.",
+      "mutating": false,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {
+          "deckId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "deckId"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "today": {
+            "type": "object",
+            "properties": {
+              "cards": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "reviews": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "elapsedSeconds": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1.7976931348623157e+308
+              },
+              "averageSeconds": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1.7976931348623157e+308
+              },
+              "againCount": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "correctCount": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              }
+            },
+            "required": [
+              "cards",
+              "reviews",
+              "elapsedSeconds",
+              "averageSeconds",
+              "againCount",
+              "correctCount"
+            ],
+            "additionalProperties": false
+          },
+          "nextDueAt": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "reviewsTomorrow": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "buried": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "suspended": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "newLimitReached": {
+            "type": "boolean"
+          },
+          "reviewLimitReached": {
+            "type": "boolean"
+          },
+          "canCustomStudy": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "today",
+          "nextDueAt",
+          "reviewsTomorrow",
+          "buried",
+          "suspended",
+          "newLimitReached",
+          "reviewLimitReached",
+          "canCustomStudy"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "study.customStudyDefaults",
+      "description": "Read native custom-study limits, availability and tag defaults.",
+      "mutating": false,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {
+          "deckId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "deckId"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "maxLength": 1024
+                },
+                "include": {
+                  "type": "boolean"
+                },
+                "exclude": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "name",
+                "include",
+                "exclude"
+              ],
+              "additionalProperties": false
+            },
+            "maxItems": 100000
+          },
+          "extendNew": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "extendReview": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "availableNew": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "availableReview": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "availableNewInChildren": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "availableReviewInChildren": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "tags",
+          "extendNew",
+          "extendReview",
+          "availableNew",
+          "availableReview",
+          "availableNewInChildren",
+          "availableReviewInChildren"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "study.customStudy",
+      "description": "Adjust today's limits or build a custom-study filtered deck.",
+      "mutating": true,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {
+          "deckId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "increaseNew",
+              "increaseReview",
+              "forgotten",
+              "ahead",
+              "previewNew",
+              "byTags"
+            ]
+          },
+          "amount": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 99999
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 1024
+            },
+            "maxItems": 1000
+          },
+          "excludeTags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 1024
+            },
+            "maxItems": 1000
+          },
+          "cardState": {
+            "type": "string",
+            "enum": [
+              "all",
+              "new",
+              "due",
+              "review"
+            ]
+          }
+        },
+        "required": [
+          "deckId",
+          "kind",
+          "amount"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "deckId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "changes": {
+            "type": "object",
+            "properties": {
+              "card": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "boolean"
+              },
+              "deck": {
+                "type": "boolean"
+              },
+              "tag": {
+                "type": "boolean"
+              },
+              "notetype": {
+                "type": "boolean"
+              },
+              "config": {
+                "type": "boolean"
+              },
+              "deckConfig": {
+                "type": "boolean"
+              },
+              "mtime": {
+                "type": "boolean"
+              },
+              "browserTable": {
+                "type": "boolean"
+              },
+              "noteText": {
+                "type": "boolean"
+              },
+              "studyQueues": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "card",
+              "note",
+              "deck",
+              "tag",
+              "notetype",
+              "config",
+              "deckConfig",
+              "mtime",
+              "browserTable",
+              "noteText",
+              "studyQueues"
+            ],
+            "additionalProperties": false
+          },
+          "undo": {
+            "type": "object",
+            "properties": {
+              "canUndo": {
+                "type": "boolean"
+              },
+              "undoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "canRedo": {
+                "type": "boolean"
+              },
+              "redoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "revision": {
+                "type": "string",
+                "maxLength": 256
+              }
+            },
+            "required": [
+              "canUndo",
+              "undoLabel",
+              "canRedo",
+              "redoLabel"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "deckId",
+          "changes",
+          "undo"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "study.unbury",
+      "description": "Unbury cards in a deck by manual or sibling-burial state.",
+      "mutating": true,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {
+          "deckId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "all",
+              "manual",
+              "siblings"
+            ]
+          }
+        },
+        "required": [
+          "deckId"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "changes": {
+            "type": "object",
+            "properties": {
+              "card": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "boolean"
+              },
+              "deck": {
+                "type": "boolean"
+              },
+              "tag": {
+                "type": "boolean"
+              },
+              "notetype": {
+                "type": "boolean"
+              },
+              "config": {
+                "type": "boolean"
+              },
+              "deckConfig": {
+                "type": "boolean"
+              },
+              "mtime": {
+                "type": "boolean"
+              },
+              "browserTable": {
+                "type": "boolean"
+              },
+              "noteText": {
+                "type": "boolean"
+              },
+              "studyQueues": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "card",
+              "note",
+              "deck",
+              "tag",
+              "notetype",
+              "config",
+              "deckConfig",
+              "mtime",
+              "browserTable",
+              "noteText",
+              "studyQueues"
+            ],
+            "additionalProperties": false
+          },
+          "undo": {
+            "type": "object",
+            "properties": {
+              "canUndo": {
+                "type": "boolean"
+              },
+              "undoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "canRedo": {
+                "type": "boolean"
+              },
+              "redoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "revision": {
+                "type": "string",
+                "maxLength": 256
+              }
+            },
+            "required": [
+              "canUndo",
+              "undoLabel",
+              "canRedo",
+              "redoLabel"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "count",
+          "changes",
+          "undo"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,846 @@
+{
+  "version": 1,
+  "area": "imageOcclusion",
+  "methods": [
+    {
+      "name": "imageOcclusion.getImage",
+      "description": "Read safe media image metadata for the occlusion canvas.",
+      "mutating": false,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {
+          "filename": {
+            "type": "string",
+            "maxLength": 1024
+          }
+        },
+        "required": [
+          "filename"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "filename": {
+            "type": "string",
+            "maxLength": 1024
+          },
+          "width": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100000
+          },
+          "height": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100000
+          }
+        },
+        "required": [
+          "filename",
+          "width",
+          "height"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "imageOcclusion.addNote",
+      "description": "Create normalized masks and native text annotations. Text uses text plus optional fontSize (image-height ratio) and scale; angle uses native 1/10000-turn units. Text cannot contain the native closing cloze delimiter. Background annotations use inactive:true.",
+      "mutating": true,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {
+          "deckId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "notetypeId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "occlusion": {
+            "type": "object",
+            "properties": {
+              "image": {
+                "type": "string",
+                "maxLength": 1024
+              },
+              "masks": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "maxLength": 255
+                    },
+                    "kind": {
+                      "type": "string",
+                      "enum": [
+                        "rectangle",
+                        "ellipse",
+                        "polygon",
+                        "text"
+                      ]
+                    },
+                    "left": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "top": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "width": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "height": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "points": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "x": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 1
+                          },
+                          "y": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 1
+                          }
+                        },
+                        "required": [
+                          "x",
+                          "y"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "maxItems": 10000
+                    },
+                    "group": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "maxLength": 255
+                    },
+                    "label": {
+                      "type": "string",
+                      "maxLength": 4096
+                    },
+                    "inactive": {
+                      "type": "boolean"
+                    },
+                    "text": {
+                      "type": "string",
+                      "maxLength": 4096
+                    },
+                    "fontSize": {
+                      "type": "number",
+                      "minimum": 0.0001,
+                      "maximum": 10
+                    },
+                    "scale": {
+                      "type": "number",
+                      "minimum": 0.0001,
+                      "maximum": 100
+                    },
+                    "angle": {
+                      "type": "number",
+                      "minimum": -10000,
+                      "maximum": 10000
+                    },
+                    "fill": {
+                      "type": "string",
+                      "maxLength": 255
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "kind",
+                    "left",
+                    "top",
+                    "width",
+                    "height",
+                    "points",
+                    "group",
+                    "label",
+                    "inactive"
+                  ],
+                  "additionalProperties": false
+                },
+                "maxItems": 10000
+              },
+              "mode": {
+                "type": "string",
+                "enum": [
+                  "hideAllGuessOne",
+                  "hideOneGuessOne"
+                ]
+              },
+              "header": {
+                "type": "string",
+                "maxLength": 1048576
+              },
+              "backExtra": {
+                "type": "string",
+                "maxLength": 1048576
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "maxLength": 1024
+                },
+                "maxItems": 1000
+              }
+            },
+            "required": [
+              "image",
+              "masks",
+              "mode",
+              "header",
+              "backExtra",
+              "tags"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "deckId",
+          "notetypeId",
+          "occlusion"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "noteId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "cardIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "maxItems": 100000
+          },
+          "changes": {
+            "type": "object",
+            "properties": {
+              "card": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "boolean"
+              },
+              "deck": {
+                "type": "boolean"
+              },
+              "tag": {
+                "type": "boolean"
+              },
+              "notetype": {
+                "type": "boolean"
+              },
+              "config": {
+                "type": "boolean"
+              },
+              "deckConfig": {
+                "type": "boolean"
+              },
+              "mtime": {
+                "type": "boolean"
+              },
+              "browserTable": {
+                "type": "boolean"
+              },
+              "noteText": {
+                "type": "boolean"
+              },
+              "studyQueues": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "card",
+              "note",
+              "deck",
+              "tag",
+              "notetype",
+              "config",
+              "deckConfig",
+              "mtime",
+              "browserTable",
+              "noteText",
+              "studyQueues"
+            ],
+            "additionalProperties": false
+          },
+          "undo": {
+            "type": "object",
+            "properties": {
+              "canUndo": {
+                "type": "boolean"
+              },
+              "undoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "canRedo": {
+                "type": "boolean"
+              },
+              "redoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "revision": {
+                "type": "string",
+                "maxLength": 256
+              }
+            },
+            "required": [
+              "canUndo",
+              "undoLabel",
+              "canRedo",
+              "redoLabel"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "noteId",
+          "cardIds",
+          "changes",
+          "undo"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "imageOcclusion.getNote",
+      "description": "Read native masks, text, formatting and a content revision. Unsupported native properties fail explicitly before editing.",
+      "mutating": false,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {
+          "noteId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "noteId"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "noteId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "notetypeId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "occlusion": {
+            "type": "object",
+            "properties": {
+              "image": {
+                "type": "string",
+                "maxLength": 1024
+              },
+              "masks": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "maxLength": 255
+                    },
+                    "kind": {
+                      "type": "string",
+                      "enum": [
+                        "rectangle",
+                        "ellipse",
+                        "polygon",
+                        "text"
+                      ]
+                    },
+                    "left": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "top": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "width": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "height": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "points": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "x": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 1
+                          },
+                          "y": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 1
+                          }
+                        },
+                        "required": [
+                          "x",
+                          "y"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "maxItems": 10000
+                    },
+                    "group": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "maxLength": 255
+                    },
+                    "label": {
+                      "type": "string",
+                      "maxLength": 4096
+                    },
+                    "inactive": {
+                      "type": "boolean"
+                    },
+                    "text": {
+                      "type": "string",
+                      "maxLength": 4096
+                    },
+                    "fontSize": {
+                      "type": "number",
+                      "minimum": 0.0001,
+                      "maximum": 10
+                    },
+                    "scale": {
+                      "type": "number",
+                      "minimum": 0.0001,
+                      "maximum": 100
+                    },
+                    "angle": {
+                      "type": "number",
+                      "minimum": -10000,
+                      "maximum": 10000
+                    },
+                    "fill": {
+                      "type": "string",
+                      "maxLength": 255
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "kind",
+                    "left",
+                    "top",
+                    "width",
+                    "height",
+                    "points",
+                    "group",
+                    "label",
+                    "inactive"
+                  ],
+                  "additionalProperties": false
+                },
+                "maxItems": 10000
+              },
+              "mode": {
+                "type": "string",
+                "enum": [
+                  "hideAllGuessOne",
+                  "hideOneGuessOne"
+                ]
+              },
+              "header": {
+                "type": "string",
+                "maxLength": 1048576
+              },
+              "backExtra": {
+                "type": "string",
+                "maxLength": 1048576
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "maxLength": 1024
+                },
+                "maxItems": 1000
+              }
+            },
+            "required": [
+              "image",
+              "masks",
+              "mode",
+              "header",
+              "backExtra",
+              "tags"
+            ],
+            "additionalProperties": false
+          },
+          "revision": {
+            "type": "string",
+            "maxLength": 64
+          }
+        },
+        "required": [
+          "noteId",
+          "notetypeId",
+          "occlusion"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "imageOcclusion.updateNote",
+      "description": "Update masks, text, groups and fields; an optional expectedRevision rejects concurrent changes atomically, including changes within one timestamp second.",
+      "mutating": true,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {
+          "noteId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "occlusion": {
+            "type": "object",
+            "properties": {
+              "image": {
+                "type": "string",
+                "maxLength": 1024
+              },
+              "masks": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "maxLength": 255
+                    },
+                    "kind": {
+                      "type": "string",
+                      "enum": [
+                        "rectangle",
+                        "ellipse",
+                        "polygon",
+                        "text"
+                      ]
+                    },
+                    "left": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "top": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "width": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "height": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "points": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "x": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 1
+                          },
+                          "y": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 1
+                          }
+                        },
+                        "required": [
+                          "x",
+                          "y"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "maxItems": 10000
+                    },
+                    "group": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "maxLength": 255
+                    },
+                    "label": {
+                      "type": "string",
+                      "maxLength": 4096
+                    },
+                    "inactive": {
+                      "type": "boolean"
+                    },
+                    "text": {
+                      "type": "string",
+                      "maxLength": 4096
+                    },
+                    "fontSize": {
+                      "type": "number",
+                      "minimum": 0.0001,
+                      "maximum": 10
+                    },
+                    "scale": {
+                      "type": "number",
+                      "minimum": 0.0001,
+                      "maximum": 100
+                    },
+                    "angle": {
+                      "type": "number",
+                      "minimum": -10000,
+                      "maximum": 10000
+                    },
+                    "fill": {
+                      "type": "string",
+                      "maxLength": 255
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "kind",
+                    "left",
+                    "top",
+                    "width",
+                    "height",
+                    "points",
+                    "group",
+                    "label",
+                    "inactive"
+                  ],
+                  "additionalProperties": false
+                },
+                "maxItems": 10000
+              },
+              "mode": {
+                "type": "string",
+                "enum": [
+                  "hideAllGuessOne",
+                  "hideOneGuessOne"
+                ]
+              },
+              "header": {
+                "type": "string",
+                "maxLength": 1048576
+              },
+              "backExtra": {
+                "type": "string",
+                "maxLength": 1048576
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "maxLength": 1024
+                },
+                "maxItems": 1000
+              }
+            },
+            "required": [
+              "image",
+              "masks",
+              "mode",
+              "header",
+              "backExtra",
+              "tags"
+            ],
+            "additionalProperties": false
+          },
+          "expectedRevision": {
+            "type": "string",
+            "maxLength": 64
+          }
+        },
+        "required": [
+          "noteId",
+          "occlusion"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "noteId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "cardIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "maxItems": 100000
+          },
+          "changes": {
+            "type": "object",
+            "properties": {
+              "card": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "boolean"
+              },
+              "deck": {
+                "type": "boolean"
+              },
+              "tag": {
+                "type": "boolean"
+              },
+              "notetype": {
+                "type": "boolean"
+              },
+              "config": {
+                "type": "boolean"
+              },
+              "deckConfig": {
+                "type": "boolean"
+              },
+              "mtime": {
+                "type": "boolean"
+              },
+              "browserTable": {
+                "type": "boolean"
+              },
+              "noteText": {
+                "type": "boolean"
+              },
+              "studyQueues": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "card",
+              "note",
+              "deck",
+              "tag",
+              "notetype",
+              "config",
+              "deckConfig",
+              "mtime",
+              "browserTable",
+              "noteText",
+              "studyQueues"
+            ],
+            "additionalProperties": false
+          },
+          "undo": {
+            "type": "object",
+            "properties": {
+              "canUndo": {
+                "type": "boolean"
+              },
+              "undoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "canRedo": {
+                "type": "boolean"
+              },
+              "redoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "revision": {
+                "type": "string",
+                "maxLength": 256
+              }
+            },
+            "required": [
+              "canUndo",
+              "undoLabel",
+              "canRedo",
+              "redoLabel"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "noteId",
+          "cardIds",
+          "changes",
+          "undo"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ]
+}

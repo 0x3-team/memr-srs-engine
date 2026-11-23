@@ -1,0 +1,679 @@
+{
+  "version": 1,
+  "area": "filtered",
+  "methods": [
+    {
+      "name": "filtered.defaults",
+      "description": "Read default settings for a new filtered deck.",
+      "mutating": false,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "deckId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "terms": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "search": {
+                  "type": "string",
+                  "maxLength": 65536
+                },
+                "limit": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 100000
+                },
+                "order": {
+                  "type": "string",
+                  "enum": [
+                    "oldest",
+                    "random",
+                    "intervalAscending",
+                    "intervalDescending",
+                    "lapses",
+                    "added",
+                    "due",
+                    "reverseAdded",
+                    "retrievabilityAscending",
+                    "retrievabilityDescending",
+                    "relativeOverdueness"
+                  ]
+                }
+              },
+              "required": [
+                "search",
+                "limit",
+                "order"
+              ],
+              "additionalProperties": false
+            },
+            "maxItems": 2
+          },
+          "reschedule": {
+            "type": "boolean"
+          },
+          "stepsMinutes": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1440
+            },
+            "maxItems": 32
+          },
+          "previewAgainSeconds": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 86400
+          },
+          "previewHardSeconds": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 86400
+          },
+          "previewGoodSeconds": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 86400
+          }
+        },
+        "required": [
+          "deckId",
+          "name",
+          "terms",
+          "reschedule",
+          "stepsMinutes",
+          "previewAgainSeconds",
+          "previewHardSeconds",
+          "previewGoodSeconds"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "filtered.get",
+      "description": "Read an existing filtered deck's terms and preview delays.",
+      "mutating": false,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {
+          "deckId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "deckId"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "deckId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "terms": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "search": {
+                  "type": "string",
+                  "maxLength": 65536
+                },
+                "limit": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 100000
+                },
+                "order": {
+                  "type": "string",
+                  "enum": [
+                    "oldest",
+                    "random",
+                    "intervalAscending",
+                    "intervalDescending",
+                    "lapses",
+                    "added",
+                    "due",
+                    "reverseAdded",
+                    "retrievabilityAscending",
+                    "retrievabilityDescending",
+                    "relativeOverdueness"
+                  ]
+                }
+              },
+              "required": [
+                "search",
+                "limit",
+                "order"
+              ],
+              "additionalProperties": false
+            },
+            "maxItems": 2
+          },
+          "reschedule": {
+            "type": "boolean"
+          },
+          "stepsMinutes": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1440
+            },
+            "maxItems": 32
+          },
+          "previewAgainSeconds": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 86400
+          },
+          "previewHardSeconds": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 86400
+          },
+          "previewGoodSeconds": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 86400
+          }
+        },
+        "required": [
+          "deckId",
+          "name",
+          "terms",
+          "reschedule",
+          "stepsMinutes",
+          "previewAgainSeconds",
+          "previewHardSeconds",
+          "previewGoodSeconds"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "filtered.createOrUpdate",
+      "description": "Create or update filtered-deck searches and scheduling options.",
+      "mutating": true,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {
+          "config": {
+            "type": "object",
+            "properties": {
+              "deckId": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "name": {
+                "type": "string",
+                "maxLength": 255
+              },
+              "terms": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "search": {
+                      "type": "string",
+                      "maxLength": 65536
+                    },
+                    "limit": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 100000
+                    },
+                    "order": {
+                      "type": "string",
+                      "enum": [
+                        "oldest",
+                        "random",
+                        "intervalAscending",
+                        "intervalDescending",
+                        "lapses",
+                        "added",
+                        "due",
+                        "reverseAdded",
+                        "retrievabilityAscending",
+                        "retrievabilityDescending",
+                        "relativeOverdueness"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "search",
+                    "limit",
+                    "order"
+                  ],
+                  "additionalProperties": false
+                },
+                "maxItems": 2
+              },
+              "reschedule": {
+                "type": "boolean"
+              },
+              "stepsMinutes": {
+                "type": "array",
+                "items": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1440
+                },
+                "maxItems": 32
+              },
+              "previewAgainSeconds": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 86400
+              },
+              "previewHardSeconds": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 86400
+              },
+              "previewGoodSeconds": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 86400
+              }
+            },
+            "required": [
+              "deckId",
+              "name",
+              "terms",
+              "reschedule",
+              "stepsMinutes",
+              "previewAgainSeconds",
+              "previewHardSeconds",
+              "previewGoodSeconds"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "config"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "deckId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "changes": {
+            "type": "object",
+            "properties": {
+              "card": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "boolean"
+              },
+              "deck": {
+                "type": "boolean"
+              },
+              "tag": {
+                "type": "boolean"
+              },
+              "notetype": {
+                "type": "boolean"
+              },
+              "config": {
+                "type": "boolean"
+              },
+              "deckConfig": {
+                "type": "boolean"
+              },
+              "mtime": {
+                "type": "boolean"
+              },
+              "browserTable": {
+                "type": "boolean"
+              },
+              "noteText": {
+                "type": "boolean"
+              },
+              "studyQueues": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "card",
+              "note",
+              "deck",
+              "tag",
+              "notetype",
+              "config",
+              "deckConfig",
+              "mtime",
+              "browserTable",
+              "noteText",
+              "studyQueues"
+            ],
+            "additionalProperties": false
+          },
+          "undo": {
+            "type": "object",
+            "properties": {
+              "canUndo": {
+                "type": "boolean"
+              },
+              "undoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "canRedo": {
+                "type": "boolean"
+              },
+              "redoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "revision": {
+                "type": "string",
+                "maxLength": 256
+              }
+            },
+            "required": [
+              "canUndo",
+              "undoLabel",
+              "canRedo",
+              "redoLabel"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "deckId",
+          "changes",
+          "undo"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "filtered.rebuild",
+      "description": "Refill a filtered deck; terminal progress supplies its native mutation result and selected count.",
+      "mutating": true,
+      "longOperation": true,
+      "params": {
+        "type": "object",
+        "properties": {
+          "deckId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "deckId"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "operationId": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "changes": {
+            "type": "object",
+            "properties": {
+              "card": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "boolean"
+              },
+              "deck": {
+                "type": "boolean"
+              },
+              "tag": {
+                "type": "boolean"
+              },
+              "notetype": {
+                "type": "boolean"
+              },
+              "config": {
+                "type": "boolean"
+              },
+              "deckConfig": {
+                "type": "boolean"
+              },
+              "mtime": {
+                "type": "boolean"
+              },
+              "browserTable": {
+                "type": "boolean"
+              },
+              "noteText": {
+                "type": "boolean"
+              },
+              "studyQueues": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "card",
+              "note",
+              "deck",
+              "tag",
+              "notetype",
+              "config",
+              "deckConfig",
+              "mtime",
+              "browserTable",
+              "noteText",
+              "studyQueues"
+            ],
+            "additionalProperties": false
+          },
+          "undo": {
+            "type": "object",
+            "properties": {
+              "canUndo": {
+                "type": "boolean"
+              },
+              "undoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "canRedo": {
+                "type": "boolean"
+              },
+              "redoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "revision": {
+                "type": "string",
+                "maxLength": 256
+              }
+            },
+            "required": [
+              "canUndo",
+              "undoLabel",
+              "canRedo",
+              "redoLabel"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "operationId",
+          "changes",
+          "undo"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "filtered.empty",
+      "description": "Return filtered cards to their original decks; terminal progress supplies its native mutation result and returned count.",
+      "mutating": true,
+      "longOperation": true,
+      "params": {
+        "type": "object",
+        "properties": {
+          "deckId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "deckId"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "operationId": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "changes": {
+            "type": "object",
+            "properties": {
+              "card": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "boolean"
+              },
+              "deck": {
+                "type": "boolean"
+              },
+              "tag": {
+                "type": "boolean"
+              },
+              "notetype": {
+                "type": "boolean"
+              },
+              "config": {
+                "type": "boolean"
+              },
+              "deckConfig": {
+                "type": "boolean"
+              },
+              "mtime": {
+                "type": "boolean"
+              },
+              "browserTable": {
+                "type": "boolean"
+              },
+              "noteText": {
+                "type": "boolean"
+              },
+              "studyQueues": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "card",
+              "note",
+              "deck",
+              "tag",
+              "notetype",
+              "config",
+              "deckConfig",
+              "mtime",
+              "browserTable",
+              "noteText",
+              "studyQueues"
+            ],
+            "additionalProperties": false
+          },
+          "undo": {
+            "type": "object",
+            "properties": {
+              "canUndo": {
+                "type": "boolean"
+              },
+              "undoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "canRedo": {
+                "type": "boolean"
+              },
+              "redoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "revision": {
+                "type": "string",
+                "maxLength": 256
+              }
+            },
+            "required": [
+              "canUndo",
+              "undoLabel",
+              "canRedo",
+              "redoLabel"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "operationId",
+          "changes",
+          "undo"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ]
+}

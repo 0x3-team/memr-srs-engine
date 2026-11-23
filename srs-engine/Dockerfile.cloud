@@ -1,0 +1,57 @@
+# Memr Cloud SRS Engine image — non-root, read-only root, hash-pinned wheels, no outbound network.
+# Build (from study-platform/):
+#   docker build -f srs-engine/Dockerfile.cloud -t memr/srs-engine:cloud-dev .
+
+FROM node:24-bookworm-slim AS node-runtime
+
+FROM python:3.12-slim-bookworm
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONHASHSEED=0
+
+# Sync transport tests and native sync bridge require Node 24's built-in zstd streams.
+COPY --from=node-runtime /usr/local/bin/node /usr/local/bin/node
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends libstdc++6 \
+    && rm -rf /var/lib/apt/lists/* \
+    && node -e "import('node:zlib').then(z => { if (typeof z.createZstdDecompress !== 'function') process.exit(1); })"
+
+COPY srs-engine/requirements.txt /app/srs-engine/requirements.txt
+
+RUN python -m venv /opt/memr/venv \
+    && /opt/memr/venv/bin/python -m pip install --no-cache-dir --no-compile --require-hashes --only-binary :all: -r /app/srs-engine/requirements.txt \
+    && /opt/memr/venv/bin/python -I -B -c "import anki.collection, zstandard; zstandard.ZstdDecompressor(max_window_size=8*1024*1024)" \
+    && rm -rf /opt/memr/venv/lib/python*/site-packages/pip* /opt/memr/venv/bin/pip* /root/.cache
+
+COPY shared/srs/contract/catalogue /app/shared/srs/contract/catalogue
+COPY srs-engine/launch.py /app/srs-engine/launch.py
+COPY srs-engine/http_shim.py /app/srs-engine/http_shim.py
+COPY srs-engine/memr_srs_engine /app/srs-engine/memr_srs_engine
+COPY srs-engine/licenses /app/srs-engine/licenses
+COPY srs-engine/tests /app/srs-engine/tests
+
+RUN chmod -R u=rwX,go=rX /app /opt/memr/venv \
+    && groupadd --gid 10001 memr \
+    && useradd --uid 10001 --gid 10001 --no-create-home --shell /usr/sbin/nologin memr \
+    && mkdir -p /data \
+    && chown 10001:10001 /data \
+    && chmod 0700 /data
+
+USER 10001:10001
+WORKDIR /app
+
+ENV PATH="/opt/memr/venv/bin:$PATH" \
+    HOME=/tmp \
+    TMPDIR=/tmp \
+    TEMP=/tmp \
+    MEMR_SRS_DIR=/data \
+    MEMR_SRS_HOST=0.0.0.0 \
+    MEMR_SRS_PORT=8080 \
+    MEMR_SRS_REQUIRE_RESTORE=1 \
+    PORT=8080
+
+EXPOSE 8080
+
+ENTRYPOINT ["/opt/memr/venv/bin/python", "-I", "-B", "/app/srs-engine/http_shim.py"]

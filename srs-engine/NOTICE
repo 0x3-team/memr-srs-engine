@@ -1,0 +1,36 @@
+Memr flashcard engine
+Copyright (C) 2026 Human Insight LLC
+
+This program is free software: you can redistribute it and/or modify it
+under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or (at your
+option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
+License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
+
+This source also includes the operation contract the engine loads, in
+study-platform/shared/srs/contract/ (the catalogue and the modules that
+generate it), which is part of this same AGPL-3.0-or-later work.
+
+---
+
+This engine runs Anki 26.09.3 unmodified.
+
+Anki's copyright line, as stated by Anki's own source file headers:
+
+    Copyright: Ankitects Pty Ltd and contributors
+
+Anki is licensed under the GNU Affero General Public License, version 3
+or later, with portions contributed by Anki users licensed under the
+BSD-3-Clause license (see licenses/anki-26.9.3/CONTRIBUTORS). The complete
+Anki license texts shipped with this engine are preserved under
+licenses/anki-26.9.3/.
+
+Anki is a trademark of Anki Software, LLC. Memr is not affiliated with or
+endorsed by Anki Software, LLC.

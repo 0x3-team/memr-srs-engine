@@ -1,0 +1,265 @@
+{
+  "version": 1,
+  "area": "prefs",
+  "methods": [
+    {
+      "name": "prefs.get",
+      "description": "Read collection scheduling, reviewer display and native backup preferences.",
+      "mutating": false,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "nextDayStartsAt": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 23
+          },
+          "learnAheadSeconds": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 86400
+          },
+          "timeboxSeconds": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 86400
+          },
+          "showIntervals": {
+            "type": "boolean"
+          },
+          "showRemainingCounts": {
+            "type": "boolean"
+          },
+          "backup": {
+            "type": "object",
+            "properties": {
+              "intervalMinutes": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 1440
+              },
+              "daily": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 999
+              },
+              "weekly": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 999
+              },
+              "monthly": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 999
+              }
+            },
+            "required": [
+              "intervalMinutes",
+              "daily",
+              "weekly",
+              "monthly"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "nextDayStartsAt",
+          "learnAheadSeconds",
+          "timeboxSeconds",
+          "showIntervals",
+          "showRemainingCounts",
+          "backup"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "prefs.set",
+      "description": "Persist collection scheduling, reviewer display and native backup preferences.",
+      "mutating": true,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {
+          "preferences": {
+            "type": "object",
+            "properties": {
+              "nextDayStartsAt": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 23
+              },
+              "learnAheadSeconds": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 86400
+              },
+              "timeboxSeconds": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 86400
+              },
+              "showIntervals": {
+                "type": "boolean"
+              },
+              "showRemainingCounts": {
+                "type": "boolean"
+              },
+              "backup": {
+                "type": "object",
+                "properties": {
+                  "intervalMinutes": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 1440
+                  },
+                  "daily": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 999
+                  },
+                  "weekly": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 999
+                  },
+                  "monthly": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 999
+                  }
+                },
+                "required": [
+                  "intervalMinutes",
+                  "daily",
+                  "weekly",
+                  "monthly"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "nextDayStartsAt",
+              "learnAheadSeconds",
+              "timeboxSeconds",
+              "showIntervals",
+              "showRemainingCounts",
+              "backup"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "preferences"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "changes": {
+            "type": "object",
+            "properties": {
+              "card": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "boolean"
+              },
+              "deck": {
+                "type": "boolean"
+              },
+              "tag": {
+                "type": "boolean"
+              },
+              "notetype": {
+                "type": "boolean"
+              },
+              "config": {
+                "type": "boolean"
+              },
+              "deckConfig": {
+                "type": "boolean"
+              },
+              "mtime": {
+                "type": "boolean"
+              },
+              "browserTable": {
+                "type": "boolean"
+              },
+              "noteText": {
+                "type": "boolean"
+              },
+              "studyQueues": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "card",
+              "note",
+              "deck",
+              "tag",
+              "notetype",
+              "config",
+              "deckConfig",
+              "mtime",
+              "browserTable",
+              "noteText",
+              "studyQueues"
+            ],
+            "additionalProperties": false
+          },
+          "undo": {
+            "type": "object",
+            "properties": {
+              "canUndo": {
+                "type": "boolean"
+              },
+              "undoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "canRedo": {
+                "type": "boolean"
+              },
+              "redoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "revision": {
+                "type": "string",
+                "maxLength": 256
+              }
+            },
+            "required": [
+              "canUndo",
+              "undoLabel",
+              "canRedo",
+              "redoLabel"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "changes",
+          "undo"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,2212 @@
+{
+  "version": 1,
+  "area": "notetypes",
+  "methods": [
+    {
+      "name": "notetypes.list",
+      "description": "List note types with kinds and note-use counts.",
+      "mutating": false,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "notetypes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "name": {
+                  "type": "string",
+                  "maxLength": 255
+                },
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "normal",
+                    "cloze",
+                    "imageOcclusion"
+                  ]
+                },
+                "noteCount": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                }
+              },
+              "required": [
+                "id",
+                "name",
+                "kind",
+                "noteCount"
+              ],
+              "additionalProperties": false
+            },
+            "maxItems": 10000
+          }
+        },
+        "required": [
+          "notetypes"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "notetypes.get",
+      "description": "Read fields, templates, stylesheet and note-type options.",
+      "mutating": false,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {
+          "notetypeId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "notetypeId"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "normal",
+              "cloze",
+              "imageOcclusion"
+            ]
+          },
+          "fields": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "maxLength": 255
+                },
+                "ord": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 65535
+                },
+                "sticky": {
+                  "type": "boolean"
+                },
+                "rtl": {
+                  "type": "boolean"
+                },
+                "font": {
+                  "type": "string",
+                  "maxLength": 255
+                },
+                "size": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 200
+                },
+                "plainText": {
+                  "type": "boolean"
+                },
+                "collapsed": {
+                  "type": "boolean"
+                },
+                "excludeFromSearch": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "name",
+                "ord",
+                "sticky",
+                "rtl",
+                "font",
+                "size",
+                "plainText",
+                "collapsed",
+                "excludeFromSearch"
+              ],
+              "additionalProperties": false
+            },
+            "maxItems": 512
+          },
+          "templates": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "maxLength": 255
+                },
+                "ord": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 65535
+                },
+                "questionFormat": {
+                  "type": "string",
+                  "maxLength": 1048576
+                },
+                "answerFormat": {
+                  "type": "string",
+                  "maxLength": 1048576
+                },
+                "deckId": {
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "browserQuestionFormat": {
+                  "type": "string",
+                  "maxLength": 1048576
+                },
+                "browserAnswerFormat": {
+                  "type": "string",
+                  "maxLength": 1048576
+                }
+              },
+              "required": [
+                "name",
+                "ord",
+                "questionFormat",
+                "answerFormat",
+                "deckId",
+                "browserQuestionFormat",
+                "browserAnswerFormat"
+              ],
+              "additionalProperties": false
+            },
+            "maxItems": 256
+          },
+          "css": {
+            "type": "string",
+            "maxLength": 1048576
+          },
+          "sortField": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 511
+          },
+          "latexHeader": {
+            "type": "string",
+            "maxLength": 1048576
+          },
+          "latexFooter": {
+            "type": "string",
+            "maxLength": 1048576
+          },
+          "latexSvg": {
+            "type": "boolean"
+          },
+          "noteCount": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "kind",
+          "fields",
+          "templates",
+          "css",
+          "sortField",
+          "latexHeader",
+          "latexFooter",
+          "latexSvg",
+          "noteCount"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "notetypes.add",
+      "description": "Create from exactly one complete definition or stockKind; name overrides only a stock definition.",
+      "mutating": true,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {
+          "notetype": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "name": {
+                "type": "string",
+                "maxLength": 255
+              },
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "normal",
+                  "cloze",
+                  "imageOcclusion"
+                ]
+              },
+              "fields": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "maxLength": 255
+                    },
+                    "ord": {
+                      "type": [
+                        "integer",
+                        "null"
+                      ],
+                      "minimum": 0,
+                      "maximum": 511
+                    },
+                    "sticky": {
+                      "type": "boolean"
+                    },
+                    "rtl": {
+                      "type": "boolean"
+                    },
+                    "font": {
+                      "type": "string",
+                      "maxLength": 255
+                    },
+                    "size": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 200
+                    },
+                    "plainText": {
+                      "type": "boolean"
+                    },
+                    "collapsed": {
+                      "type": "boolean"
+                    },
+                    "excludeFromSearch": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "ord",
+                    "sticky",
+                    "rtl",
+                    "font",
+                    "size",
+                    "plainText",
+                    "collapsed",
+                    "excludeFromSearch"
+                  ],
+                  "additionalProperties": false
+                },
+                "maxItems": 512
+              },
+              "templates": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "maxLength": 255
+                    },
+                    "ord": {
+                      "type": [
+                        "integer",
+                        "null"
+                      ],
+                      "minimum": 0,
+                      "maximum": 255
+                    },
+                    "questionFormat": {
+                      "type": "string",
+                      "maxLength": 1048576
+                    },
+                    "answerFormat": {
+                      "type": "string",
+                      "maxLength": 1048576
+                    },
+                    "deckId": {
+                      "type": [
+                        "integer",
+                        "null"
+                      ],
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "browserQuestionFormat": {
+                      "type": "string",
+                      "maxLength": 1048576
+                    },
+                    "browserAnswerFormat": {
+                      "type": "string",
+                      "maxLength": 1048576
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "ord",
+                    "questionFormat",
+                    "answerFormat",
+                    "deckId",
+                    "browserQuestionFormat",
+                    "browserAnswerFormat"
+                  ],
+                  "additionalProperties": false
+                },
+                "maxItems": 256
+              },
+              "css": {
+                "type": "string",
+                "maxLength": 1048576
+              },
+              "sortField": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 511
+              },
+              "latexHeader": {
+                "type": "string",
+                "maxLength": 1048576
+              },
+              "latexFooter": {
+                "type": "string",
+                "maxLength": 1048576
+              },
+              "latexSvg": {
+                "type": "boolean"
+              },
+              "noteCount": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "kind",
+              "fields",
+              "templates",
+              "css",
+              "sortField",
+              "latexHeader",
+              "latexFooter",
+              "latexSvg",
+              "noteCount"
+            ],
+            "additionalProperties": false
+          },
+          "stockKind": {
+            "type": "string",
+            "enum": [
+              "basic",
+              "basicReversed",
+              "basicOptionalReversed",
+              "typeIn",
+              "cloze",
+              "imageOcclusion"
+            ]
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 255
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "notetypeId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "changes": {
+            "type": "object",
+            "properties": {
+              "card": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "boolean"
+              },
+              "deck": {
+                "type": "boolean"
+              },
+              "tag": {
+                "type": "boolean"
+              },
+              "notetype": {
+                "type": "boolean"
+              },
+              "config": {
+                "type": "boolean"
+              },
+              "deckConfig": {
+                "type": "boolean"
+              },
+              "mtime": {
+                "type": "boolean"
+              },
+              "browserTable": {
+                "type": "boolean"
+              },
+              "noteText": {
+                "type": "boolean"
+              },
+              "studyQueues": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "card",
+              "note",
+              "deck",
+              "tag",
+              "notetype",
+              "config",
+              "deckConfig",
+              "mtime",
+              "browserTable",
+              "noteText",
+              "studyQueues"
+            ],
+            "additionalProperties": false
+          },
+          "undo": {
+            "type": "object",
+            "properties": {
+              "canUndo": {
+                "type": "boolean"
+              },
+              "undoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "canRedo": {
+                "type": "boolean"
+              },
+              "redoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "revision": {
+                "type": "string",
+                "maxLength": 256
+              }
+            },
+            "required": [
+              "canUndo",
+              "undoLabel",
+              "canRedo",
+              "redoLabel"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "notetypeId",
+          "changes",
+          "undo"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "notetypes.clone",
+      "description": "Clone a note type's fields, templates and styling.",
+      "mutating": true,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {
+          "notetypeId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 255
+          }
+        },
+        "required": [
+          "notetypeId",
+          "name"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "notetypeId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "changes": {
+            "type": "object",
+            "properties": {
+              "card": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "boolean"
+              },
+              "deck": {
+                "type": "boolean"
+              },
+              "tag": {
+                "type": "boolean"
+              },
+              "notetype": {
+                "type": "boolean"
+              },
+              "config": {
+                "type": "boolean"
+              },
+              "deckConfig": {
+                "type": "boolean"
+              },
+              "mtime": {
+                "type": "boolean"
+              },
+              "browserTable": {
+                "type": "boolean"
+              },
+              "noteText": {
+                "type": "boolean"
+              },
+              "studyQueues": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "card",
+              "note",
+              "deck",
+              "tag",
+              "notetype",
+              "config",
+              "deckConfig",
+              "mtime",
+              "browserTable",
+              "noteText",
+              "studyQueues"
+            ],
+            "additionalProperties": false
+          },
+          "undo": {
+            "type": "object",
+            "properties": {
+              "canUndo": {
+                "type": "boolean"
+              },
+              "undoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "canRedo": {
+                "type": "boolean"
+              },
+              "redoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "revision": {
+                "type": "string",
+                "maxLength": 256
+              }
+            },
+            "required": [
+              "canUndo",
+              "undoLabel",
+              "canRedo",
+              "redoLabel"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "notetypeId",
+          "changes",
+          "undo"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "notetypes.update",
+      "description": "Update fields, templates and styling in one native undo step; await the terminal progress result. Array order is final, ord is the old ordinal or null for a new item, and sortField is the final field index. Selecting a new field before the last position is unsupported before writing when its index matches a retained old ordinal: save the schema with the last field as sortField, reload, then select the new sort field.",
+      "mutating": true,
+      "longOperation": true,
+      "params": {
+        "type": "object",
+        "properties": {
+          "notetype": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "name": {
+                "type": "string",
+                "maxLength": 255
+              },
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "normal",
+                  "cloze",
+                  "imageOcclusion"
+                ]
+              },
+              "fields": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "maxLength": 255
+                    },
+                    "ord": {
+                      "type": [
+                        "integer",
+                        "null"
+                      ],
+                      "minimum": 0,
+                      "maximum": 511
+                    },
+                    "sticky": {
+                      "type": "boolean"
+                    },
+                    "rtl": {
+                      "type": "boolean"
+                    },
+                    "font": {
+                      "type": "string",
+                      "maxLength": 255
+                    },
+                    "size": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 200
+                    },
+                    "plainText": {
+                      "type": "boolean"
+                    },
+                    "collapsed": {
+                      "type": "boolean"
+                    },
+                    "excludeFromSearch": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "ord",
+                    "sticky",
+                    "rtl",
+                    "font",
+                    "size",
+                    "plainText",
+                    "collapsed",
+                    "excludeFromSearch"
+                  ],
+                  "additionalProperties": false
+                },
+                "maxItems": 512
+              },
+              "templates": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "maxLength": 255
+                    },
+                    "ord": {
+                      "type": [
+                        "integer",
+                        "null"
+                      ],
+                      "minimum": 0,
+                      "maximum": 255
+                    },
+                    "questionFormat": {
+                      "type": "string",
+                      "maxLength": 1048576
+                    },
+                    "answerFormat": {
+                      "type": "string",
+                      "maxLength": 1048576
+                    },
+                    "deckId": {
+                      "type": [
+                        "integer",
+                        "null"
+                      ],
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "browserQuestionFormat": {
+                      "type": "string",
+                      "maxLength": 1048576
+                    },
+                    "browserAnswerFormat": {
+                      "type": "string",
+                      "maxLength": 1048576
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "ord",
+                    "questionFormat",
+                    "answerFormat",
+                    "deckId",
+                    "browserQuestionFormat",
+                    "browserAnswerFormat"
+                  ],
+                  "additionalProperties": false
+                },
+                "maxItems": 256
+              },
+              "css": {
+                "type": "string",
+                "maxLength": 1048576
+              },
+              "sortField": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 511
+              },
+              "latexHeader": {
+                "type": "string",
+                "maxLength": 1048576
+              },
+              "latexFooter": {
+                "type": "string",
+                "maxLength": 1048576
+              },
+              "latexSvg": {
+                "type": "boolean"
+              },
+              "noteCount": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "kind",
+              "fields",
+              "templates",
+              "css",
+              "sortField",
+              "latexHeader",
+              "latexFooter",
+              "latexSvg",
+              "noteCount"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "notetype"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "operationId": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "changes": {
+            "type": "object",
+            "properties": {
+              "card": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "boolean"
+              },
+              "deck": {
+                "type": "boolean"
+              },
+              "tag": {
+                "type": "boolean"
+              },
+              "notetype": {
+                "type": "boolean"
+              },
+              "config": {
+                "type": "boolean"
+              },
+              "deckConfig": {
+                "type": "boolean"
+              },
+              "mtime": {
+                "type": "boolean"
+              },
+              "browserTable": {
+                "type": "boolean"
+              },
+              "noteText": {
+                "type": "boolean"
+              },
+              "studyQueues": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "card",
+              "note",
+              "deck",
+              "tag",
+              "notetype",
+              "config",
+              "deckConfig",
+              "mtime",
+              "browserTable",
+              "noteText",
+              "studyQueues"
+            ],
+            "additionalProperties": false
+          },
+          "undo": {
+            "type": "object",
+            "properties": {
+              "canUndo": {
+                "type": "boolean"
+              },
+              "undoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "canRedo": {
+                "type": "boolean"
+              },
+              "redoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "revision": {
+                "type": "string",
+                "maxLength": 256
+              }
+            },
+            "required": [
+              "canUndo",
+              "undoLabel",
+              "canRedo",
+              "redoLabel"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "operationId",
+          "changes",
+          "undo"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "notetypes.rename",
+      "description": "Rename a note type without changing its identity.",
+      "mutating": true,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {
+          "notetypeId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 255
+          }
+        },
+        "required": [
+          "notetypeId",
+          "name"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "changes": {
+            "type": "object",
+            "properties": {
+              "card": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "boolean"
+              },
+              "deck": {
+                "type": "boolean"
+              },
+              "tag": {
+                "type": "boolean"
+              },
+              "notetype": {
+                "type": "boolean"
+              },
+              "config": {
+                "type": "boolean"
+              },
+              "deckConfig": {
+                "type": "boolean"
+              },
+              "mtime": {
+                "type": "boolean"
+              },
+              "browserTable": {
+                "type": "boolean"
+              },
+              "noteText": {
+                "type": "boolean"
+              },
+              "studyQueues": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "card",
+              "note",
+              "deck",
+              "tag",
+              "notetype",
+              "config",
+              "deckConfig",
+              "mtime",
+              "browserTable",
+              "noteText",
+              "studyQueues"
+            ],
+            "additionalProperties": false
+          },
+          "undo": {
+            "type": "object",
+            "properties": {
+              "canUndo": {
+                "type": "boolean"
+              },
+              "undoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "canRedo": {
+                "type": "boolean"
+              },
+              "redoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "revision": {
+                "type": "string",
+                "maxLength": 256
+              }
+            },
+            "required": [
+              "canUndo",
+              "undoLabel",
+              "canRedo",
+              "redoLabel"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "changes",
+          "undo"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "notetypes.remove",
+      "description": "Remove a note type and its notes only after explicit confirmation; the terminal progress result includes the removed note count.",
+      "mutating": true,
+      "longOperation": true,
+      "params": {
+        "type": "object",
+        "properties": {
+          "notetypeId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "deleteNotes": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "notetypeId",
+          "deleteNotes"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "operationId": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "changes": {
+            "type": "object",
+            "properties": {
+              "card": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "boolean"
+              },
+              "deck": {
+                "type": "boolean"
+              },
+              "tag": {
+                "type": "boolean"
+              },
+              "notetype": {
+                "type": "boolean"
+              },
+              "config": {
+                "type": "boolean"
+              },
+              "deckConfig": {
+                "type": "boolean"
+              },
+              "mtime": {
+                "type": "boolean"
+              },
+              "browserTable": {
+                "type": "boolean"
+              },
+              "noteText": {
+                "type": "boolean"
+              },
+              "studyQueues": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "card",
+              "note",
+              "deck",
+              "tag",
+              "notetype",
+              "config",
+              "deckConfig",
+              "mtime",
+              "browserTable",
+              "noteText",
+              "studyQueues"
+            ],
+            "additionalProperties": false
+          },
+          "undo": {
+            "type": "object",
+            "properties": {
+              "canUndo": {
+                "type": "boolean"
+              },
+              "undoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "canRedo": {
+                "type": "boolean"
+              },
+              "redoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "revision": {
+                "type": "string",
+                "maxLength": 256
+              }
+            },
+            "required": [
+              "canUndo",
+              "undoLabel",
+              "canRedo",
+              "redoLabel"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "operationId",
+          "changes",
+          "undo"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "notetypes.stock",
+      "description": "Return stock definitions for Basic, reversed, optional reversed, type-in, Cloze and image occlusion.",
+      "mutating": false,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "basic",
+              "basicReversed",
+              "basicOptionalReversed",
+              "typeIn",
+              "cloze",
+              "imageOcclusion"
+            ]
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "notetypes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "name": {
+                  "type": "string",
+                  "maxLength": 255
+                },
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "normal",
+                    "cloze",
+                    "imageOcclusion"
+                  ]
+                },
+                "fields": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "maxLength": 255
+                      },
+                      "ord": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 65535
+                      },
+                      "sticky": {
+                        "type": "boolean"
+                      },
+                      "rtl": {
+                        "type": "boolean"
+                      },
+                      "font": {
+                        "type": "string",
+                        "maxLength": 255
+                      },
+                      "size": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 200
+                      },
+                      "plainText": {
+                        "type": "boolean"
+                      },
+                      "collapsed": {
+                        "type": "boolean"
+                      },
+                      "excludeFromSearch": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "ord",
+                      "sticky",
+                      "rtl",
+                      "font",
+                      "size",
+                      "plainText",
+                      "collapsed",
+                      "excludeFromSearch"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "maxItems": 512
+                },
+                "templates": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "maxLength": 255
+                      },
+                      "ord": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 65535
+                      },
+                      "questionFormat": {
+                        "type": "string",
+                        "maxLength": 1048576
+                      },
+                      "answerFormat": {
+                        "type": "string",
+                        "maxLength": 1048576
+                      },
+                      "deckId": {
+                        "type": [
+                          "integer",
+                          "null"
+                        ],
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "browserQuestionFormat": {
+                        "type": "string",
+                        "maxLength": 1048576
+                      },
+                      "browserAnswerFormat": {
+                        "type": "string",
+                        "maxLength": 1048576
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "ord",
+                      "questionFormat",
+                      "answerFormat",
+                      "deckId",
+                      "browserQuestionFormat",
+                      "browserAnswerFormat"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "maxItems": 256
+                },
+                "css": {
+                  "type": "string",
+                  "maxLength": 1048576
+                },
+                "sortField": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 511
+                },
+                "latexHeader": {
+                  "type": "string",
+                  "maxLength": 1048576
+                },
+                "latexFooter": {
+                  "type": "string",
+                  "maxLength": 1048576
+                },
+                "latexSvg": {
+                  "type": "boolean"
+                },
+                "noteCount": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                }
+              },
+              "required": [
+                "id",
+                "name",
+                "kind",
+                "fields",
+                "templates",
+                "css",
+                "sortField",
+                "latexHeader",
+                "latexFooter",
+                "latexSvg",
+                "noteCount"
+              ],
+              "additionalProperties": false
+            },
+            "maxItems": 16
+          }
+        },
+        "required": [
+          "notetypes"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "notetypes.previewTemplate",
+      "description": "Render unsaved edits without changing the active collection. templateOrdinal is the final template index or zero-based cloze number. A supplied cardId must match the selected template's retained ord or cloze number; a new normal template has no existing card identity. With noteId alone, use its matching existing card when available, otherwise native uncommitted sample/default context. Fields may be explicit, taken from the note, or native samples.",
+      "mutating": false,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {
+          "notetype": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "name": {
+                "type": "string",
+                "maxLength": 255
+              },
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "normal",
+                  "cloze",
+                  "imageOcclusion"
+                ]
+              },
+              "fields": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "maxLength": 255
+                    },
+                    "ord": {
+                      "type": [
+                        "integer",
+                        "null"
+                      ],
+                      "minimum": 0,
+                      "maximum": 511
+                    },
+                    "sticky": {
+                      "type": "boolean"
+                    },
+                    "rtl": {
+                      "type": "boolean"
+                    },
+                    "font": {
+                      "type": "string",
+                      "maxLength": 255
+                    },
+                    "size": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 200
+                    },
+                    "plainText": {
+                      "type": "boolean"
+                    },
+                    "collapsed": {
+                      "type": "boolean"
+                    },
+                    "excludeFromSearch": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "ord",
+                    "sticky",
+                    "rtl",
+                    "font",
+                    "size",
+                    "plainText",
+                    "collapsed",
+                    "excludeFromSearch"
+                  ],
+                  "additionalProperties": false
+                },
+                "maxItems": 512
+              },
+              "templates": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "maxLength": 255
+                    },
+                    "ord": {
+                      "type": [
+                        "integer",
+                        "null"
+                      ],
+                      "minimum": 0,
+                      "maximum": 255
+                    },
+                    "questionFormat": {
+                      "type": "string",
+                      "maxLength": 1048576
+                    },
+                    "answerFormat": {
+                      "type": "string",
+                      "maxLength": 1048576
+                    },
+                    "deckId": {
+                      "type": [
+                        "integer",
+                        "null"
+                      ],
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "browserQuestionFormat": {
+                      "type": "string",
+                      "maxLength": 1048576
+                    },
+                    "browserAnswerFormat": {
+                      "type": "string",
+                      "maxLength": 1048576
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "ord",
+                    "questionFormat",
+                    "answerFormat",
+                    "deckId",
+                    "browserQuestionFormat",
+                    "browserAnswerFormat"
+                  ],
+                  "additionalProperties": false
+                },
+                "maxItems": 256
+              },
+              "css": {
+                "type": "string",
+                "maxLength": 1048576
+              },
+              "sortField": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 511
+              },
+              "latexHeader": {
+                "type": "string",
+                "maxLength": 1048576
+              },
+              "latexFooter": {
+                "type": "string",
+                "maxLength": 1048576
+              },
+              "latexSvg": {
+                "type": "boolean"
+              },
+              "noteCount": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "kind",
+              "fields",
+              "templates",
+              "css",
+              "sortField",
+              "latexHeader",
+              "latexFooter",
+              "latexSvg",
+              "noteCount"
+            ],
+            "additionalProperties": false
+          },
+          "fields": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 1048576
+            },
+            "maxItems": 512
+          },
+          "templateOrdinal": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 499
+          },
+          "noteId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "cardId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "notetype",
+          "templateOrdinal"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "cardId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "noteId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "ord": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 65535
+          },
+          "deckId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "queue": {
+            "type": "number",
+            "enum": [
+              -3,
+              -2,
+              -1,
+              0,
+              1,
+              2,
+              3,
+              4
+            ]
+          },
+          "questionHtml": {
+            "type": "string",
+            "maxLength": 1048576
+          },
+          "answerHtml": {
+            "type": "string",
+            "maxLength": 1048576
+          },
+          "css": {
+            "type": "string",
+            "maxLength": 1048576
+          },
+          "bodyClass": {
+            "type": "string",
+            "maxLength": 1024
+          },
+          "av": {
+            "type": "object",
+            "properties": {
+              "question": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "type": "string",
+                      "enum": [
+                        "sound",
+                        "tts"
+                      ]
+                    },
+                    "filename": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "maxLength": 1024
+                    },
+                    "text": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "maxLength": 1048576
+                    },
+                    "language": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "maxLength": 255
+                    },
+                    "voices": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "maxLength": 255
+                      },
+                      "maxItems": 32
+                    },
+                    "speed": {
+                      "type": "number",
+                      "minimum": 0.1,
+                      "maximum": 10
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "filename",
+                    "text",
+                    "language",
+                    "voices",
+                    "speed"
+                  ],
+                  "additionalProperties": false
+                },
+                "maxItems": 128
+              },
+              "answer": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "type": "string",
+                      "enum": [
+                        "sound",
+                        "tts"
+                      ]
+                    },
+                    "filename": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "maxLength": 1024
+                    },
+                    "text": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "maxLength": 1048576
+                    },
+                    "language": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "maxLength": 255
+                    },
+                    "voices": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "maxLength": 255
+                      },
+                      "maxItems": 32
+                    },
+                    "speed": {
+                      "type": "number",
+                      "minimum": 0.1,
+                      "maximum": 10
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "filename",
+                    "text",
+                    "language",
+                    "voices",
+                    "speed"
+                  ],
+                  "additionalProperties": false
+                },
+                "maxItems": 128
+              }
+            },
+            "required": [
+              "question",
+              "answer"
+            ],
+            "additionalProperties": false
+          },
+          "typeAnswer": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "field": {
+                "type": "string",
+                "maxLength": 255
+              },
+              "correct": {
+                "type": "string",
+                "maxLength": 1048576
+              },
+              "font": {
+                "type": "string",
+                "maxLength": 255
+              },
+              "size": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 200
+              }
+            },
+            "required": [
+              "field",
+              "correct",
+              "font",
+              "size"
+            ],
+            "additionalProperties": false
+          },
+          "autoplay": {
+            "type": "boolean"
+          },
+          "replayQuestionOnAnswer": {
+            "type": "boolean"
+          },
+          "timer": {
+            "type": "object",
+            "properties": {
+              "show": {
+                "type": "boolean"
+              },
+              "limitSeconds": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9999
+              }
+            },
+            "required": [
+              "show",
+              "limitSeconds"
+            ],
+            "additionalProperties": false
+          },
+          "autoAdvance": {
+            "type": "object",
+            "properties": {
+              "enabled": {
+                "type": "boolean"
+              },
+              "questionSeconds": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 3600
+              },
+              "answerSeconds": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 3600
+              },
+              "questionAction": {
+                "type": "string",
+                "enum": [
+                  "showAnswer",
+                  "none"
+                ]
+              },
+              "answerAction": {
+                "type": "string",
+                "enum": [
+                  "again",
+                  "hard",
+                  "good",
+                  "easy",
+                  "bury",
+                  "none"
+                ]
+              },
+              "waitForAudio": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "enabled",
+              "questionSeconds",
+              "answerSeconds",
+              "questionAction",
+              "answerAction",
+              "waitForAudio"
+            ],
+            "additionalProperties": false
+          },
+          "nextStates": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "rating": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 4
+                },
+                "label": {
+                  "type": "string",
+                  "maxLength": 255
+                },
+                "secondsUntilDue": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                }
+              },
+              "required": [
+                "rating",
+                "label",
+                "secondsUntilDue"
+              ],
+              "additionalProperties": false
+            },
+            "maxItems": 4
+          },
+          "counts": {
+            "type": "object",
+            "properties": {
+              "new": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "learning": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "review": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              }
+            },
+            "required": [
+              "new",
+              "learning",
+              "review"
+            ],
+            "additionalProperties": false
+          },
+          "flags": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 7
+          },
+          "marked": {
+            "type": "boolean"
+          },
+          "source": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "pageId": {
+                "type": "string",
+                "maxLength": 256
+              },
+              "blockId": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 256
+              },
+              "revision": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 64
+              },
+              "uri": {
+                "type": "string",
+                "maxLength": 2048
+              },
+              "changed": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "pageId",
+              "blockId",
+              "revision",
+              "uri",
+              "changed"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "cardId",
+          "noteId",
+          "ord",
+          "deckId",
+          "queue",
+          "questionHtml",
+          "answerHtml",
+          "css",
+          "bodyClass",
+          "av",
+          "typeAnswer",
+          "autoplay",
+          "replayQuestionOnAnswer",
+          "timer",
+          "autoAdvance",
+          "nextStates",
+          "counts",
+          "flags",
+          "marked",
+          "source"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "notetypes.changeNotetype",
+      "description": "Convert notes of one source type; the terminal progress result includes the converted note count. Maps list a source ordinal per destination, -1 means blank/new, and templateMap must be empty for cloze conversions.",
+      "mutating": true,
+      "longOperation": true,
+      "params": {
+        "type": "object",
+        "properties": {
+          "noteIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "maxItems": 100000
+          },
+          "notetypeId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "fieldMap": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": -1,
+              "maximum": 511
+            },
+            "maxItems": 512
+          },
+          "templateMap": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": -1,
+              "maximum": 255
+            },
+            "maxItems": 256
+          }
+        },
+        "required": [
+          "noteIds",
+          "notetypeId",
+          "fieldMap",
+          "templateMap"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "operationId": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "changes": {
+            "type": "object",
+            "properties": {
+              "card": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "boolean"
+              },
+              "deck": {
+                "type": "boolean"
+              },
+              "tag": {
+                "type": "boolean"
+              },
+              "notetype": {
+                "type": "boolean"
+              },
+              "config": {
+                "type": "boolean"
+              },
+              "deckConfig": {
+                "type": "boolean"
+              },
+              "mtime": {
+                "type": "boolean"
+              },
+              "browserTable": {
+                "type": "boolean"
+              },
+              "noteText": {
+                "type": "boolean"
+              },
+              "studyQueues": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "card",
+              "note",
+              "deck",
+              "tag",
+              "notetype",
+              "config",
+              "deckConfig",
+              "mtime",
+              "browserTable",
+              "noteText",
+              "studyQueues"
+            ],
+            "additionalProperties": false
+          },
+          "undo": {
+            "type": "object",
+            "properties": {
+              "canUndo": {
+                "type": "boolean"
+              },
+              "undoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "canRedo": {
+                "type": "boolean"
+              },
+              "redoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "revision": {
+                "type": "string",
+                "maxLength": 256
+              }
+            },
+            "required": [
+              "canUndo",
+              "undoLabel",
+              "canRedo",
+              "redoLabel"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "operationId",
+          "changes",
+          "undo"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ]
+}

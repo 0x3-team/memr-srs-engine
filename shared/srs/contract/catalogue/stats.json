@@ -1,0 +1,2037 @@
+{
+  "version": 1,
+  "area": "stats",
+  "methods": [
+    {
+      "name": "stats.graphs",
+      "description": "Return every native graph field, window and retention split plus chart projections for a scope and period.",
+      "mutating": false,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {
+          "scope": {
+            "type": "object",
+            "properties": {
+              "deckId": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "search": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 65536
+              },
+              "includeChildren": {
+                "type": "boolean"
+              }
+            },
+            "required": [],
+            "additionalProperties": false
+          },
+          "period": {
+            "type": "string",
+            "enum": [
+              "month",
+              "quarter",
+              "year",
+              "all"
+            ]
+          }
+        },
+        "required": [
+          "scope",
+          "period"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "today": {
+            "type": "object",
+            "properties": {
+              "cards": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "reviews": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "elapsedSeconds": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1.7976931348623157e+308
+              },
+              "averageSeconds": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1.7976931348623157e+308
+              },
+              "againCount": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "correctCount": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              }
+            },
+            "required": [
+              "cards",
+              "reviews",
+              "elapsedSeconds",
+              "averageSeconds",
+              "againCount",
+              "correctCount"
+            ],
+            "additionalProperties": false
+          },
+          "graphs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "key": {
+                  "type": "string",
+                  "enum": [
+                    "futureDue",
+                    "calendar",
+                    "reviews",
+                    "cardCounts",
+                    "intervals",
+                    "ease",
+                    "difficulty",
+                    "stability",
+                    "retrievability",
+                    "hourly",
+                    "answerButtons",
+                    "added"
+                  ]
+                },
+                "label": {
+                  "type": "string",
+                  "maxLength": 255
+                },
+                "unit": {
+                  "type": "string",
+                  "maxLength": 255
+                },
+                "series": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "maxLength": 255
+                      },
+                      "points": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "x": {
+                              "type": "number",
+                              "minimum": -1.7976931348623157e+308,
+                              "maximum": 1.7976931348623157e+308
+                            },
+                            "y": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 1.7976931348623157e+308
+                            },
+                            "label": {
+                              "type": "string",
+                              "maxLength": 255
+                            }
+                          },
+                          "required": [
+                            "x",
+                            "y",
+                            "label"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "maxItems": 10000
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "points"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "maxItems": 16
+                }
+              },
+              "required": [
+                "key",
+                "label",
+                "unit",
+                "series"
+              ],
+              "additionalProperties": false
+            },
+            "maxItems": 16
+          },
+          "trueRetention": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "label": {
+                  "type": "string",
+                  "maxLength": 255
+                },
+                "passed": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "failed": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "retention": {
+                  "type": [
+                    "number",
+                    "null"
+                  ],
+                  "minimum": 0,
+                  "maximum": 1
+                }
+              },
+              "required": [
+                "label",
+                "passed",
+                "failed",
+                "retention"
+              ],
+              "additionalProperties": false
+            },
+            "maxItems": 16
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "rolloverHour": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 23
+              },
+              "fsrsEnabled": {
+                "type": "boolean"
+              },
+              "todayNative": {
+                "type": "object",
+                "properties": {
+                  "answerCount": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "answerMilliseconds": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "correctCount": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "matureCorrect": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "matureCount": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "learningCount": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "reviewCount": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "relearningCount": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "earlyReviewCount": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  }
+                },
+                "required": [
+                  "answerCount",
+                  "answerMilliseconds",
+                  "correctCount",
+                  "matureCorrect",
+                  "matureCount",
+                  "learningCount",
+                  "reviewCount",
+                  "relearningCount",
+                  "earlyReviewCount"
+                ],
+                "additionalProperties": false
+              },
+              "futureDue": {
+                "type": "object",
+                "properties": {
+                  "buckets": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "dayOffset": {
+                          "type": "integer",
+                          "minimum": -2147483648,
+                          "maximum": 9007199254740991
+                        },
+                        "count": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        }
+                      },
+                      "required": [
+                        "dayOffset",
+                        "count"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "maxItems": 10000
+                  },
+                  "haveBacklog": {
+                    "type": "boolean"
+                  },
+                  "dailyLoad": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  }
+                },
+                "required": [
+                  "buckets",
+                  "haveBacklog",
+                  "dailyLoad"
+                ],
+                "additionalProperties": false
+              },
+              "added": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "dayOffset": {
+                      "type": "integer",
+                      "minimum": -2147483648,
+                      "maximum": 9007199254740991
+                    },
+                    "count": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    }
+                  },
+                  "required": [
+                    "dayOffset",
+                    "count"
+                  ],
+                  "additionalProperties": false
+                },
+                "maxItems": 10000
+              },
+              "intervals": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "days": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "count": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    }
+                  },
+                  "required": [
+                    "days",
+                    "count"
+                  ],
+                  "additionalProperties": false
+                },
+                "maxItems": 10000
+              },
+              "stability": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "days": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "count": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    }
+                  },
+                  "required": [
+                    "days",
+                    "count"
+                  ],
+                  "additionalProperties": false
+                },
+                "maxItems": 10000
+              },
+              "ease": {
+                "type": "object",
+                "properties": {
+                  "buckets": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "percent": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "count": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        }
+                      },
+                      "required": [
+                        "percent",
+                        "count"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "maxItems": 10000
+                  },
+                  "medianPercent": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1.7976931348623157e+308
+                  }
+                },
+                "required": [
+                  "buckets",
+                  "medianPercent"
+                ],
+                "additionalProperties": false
+              },
+              "difficulty": {
+                "type": "object",
+                "properties": {
+                  "buckets": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "percent": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "count": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        }
+                      },
+                      "required": [
+                        "percent",
+                        "count"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "maxItems": 10000
+                  },
+                  "medianPercent": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1.7976931348623157e+308
+                  }
+                },
+                "required": [
+                  "buckets",
+                  "medianPercent"
+                ],
+                "additionalProperties": false
+              },
+              "retrievability": {
+                "type": "object",
+                "properties": {
+                  "buckets": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "percent": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "count": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        }
+                      },
+                      "required": [
+                        "percent",
+                        "count"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "maxItems": 10000
+                  },
+                  "averagePercent": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1.7976931348623157e+308
+                  },
+                  "sumByCard": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1.7976931348623157e+308
+                  },
+                  "sumByNote": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1.7976931348623157e+308
+                  }
+                },
+                "required": [
+                  "buckets",
+                  "averagePercent",
+                  "sumByCard",
+                  "sumByNote"
+                ],
+                "additionalProperties": false
+              },
+              "reviews": {
+                "type": "object",
+                "properties": {
+                  "counts": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "dayOffset": {
+                          "type": "integer",
+                          "minimum": -2147483648,
+                          "maximum": 9007199254740991
+                        },
+                        "learning": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "relearning": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "young": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "mature": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "filtered": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        }
+                      },
+                      "required": [
+                        "dayOffset",
+                        "learning",
+                        "relearning",
+                        "young",
+                        "mature",
+                        "filtered"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "maxItems": 10000
+                  },
+                  "timeMilliseconds": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "dayOffset": {
+                          "type": "integer",
+                          "minimum": -2147483648,
+                          "maximum": 9007199254740991
+                        },
+                        "learning": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "relearning": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "young": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "mature": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "filtered": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        }
+                      },
+                      "required": [
+                        "dayOffset",
+                        "learning",
+                        "relearning",
+                        "young",
+                        "mature",
+                        "filtered"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "maxItems": 10000
+                  }
+                },
+                "required": [
+                  "counts",
+                  "timeMilliseconds"
+                ],
+                "additionalProperties": false
+              },
+              "cardCounts": {
+                "type": "object",
+                "properties": {
+                  "includingInactive": {
+                    "type": "object",
+                    "properties": {
+                      "new": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "learning": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "relearning": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "young": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "mature": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "suspended": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "buried": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      }
+                    },
+                    "required": [
+                      "new",
+                      "learning",
+                      "relearning",
+                      "young",
+                      "mature",
+                      "suspended",
+                      "buried"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "separateInactive": {
+                    "type": "object",
+                    "properties": {
+                      "new": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "learning": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "relearning": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "young": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "mature": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "suspended": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "buried": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      }
+                    },
+                    "required": [
+                      "new",
+                      "learning",
+                      "relearning",
+                      "young",
+                      "mature",
+                      "suspended",
+                      "buried"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "includingInactive",
+                  "separateInactive"
+                ],
+                "additionalProperties": false
+              },
+              "hours": {
+                "type": "object",
+                "properties": {
+                  "month": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "hour": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 23
+                        },
+                        "total": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "correct": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        }
+                      },
+                      "required": [
+                        "hour",
+                        "total",
+                        "correct"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "maxItems": 24
+                  },
+                  "quarter": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "hour": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 23
+                        },
+                        "total": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "correct": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        }
+                      },
+                      "required": [
+                        "hour",
+                        "total",
+                        "correct"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "maxItems": 24
+                  },
+                  "year": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "hour": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 23
+                        },
+                        "total": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "correct": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        }
+                      },
+                      "required": [
+                        "hour",
+                        "total",
+                        "correct"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "maxItems": 24
+                  },
+                  "all": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "hour": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 23
+                        },
+                        "total": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "correct": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        }
+                      },
+                      "required": [
+                        "hour",
+                        "total",
+                        "correct"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "maxItems": 24
+                  }
+                },
+                "required": [
+                  "month",
+                  "quarter",
+                  "year",
+                  "all"
+                ],
+                "additionalProperties": false
+              },
+              "answerButtons": {
+                "type": "object",
+                "properties": {
+                  "month": {
+                    "type": "object",
+                    "properties": {
+                      "learning": {
+                        "type": "array",
+                        "items": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "maxItems": 4
+                      },
+                      "young": {
+                        "type": "array",
+                        "items": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "maxItems": 4
+                      },
+                      "mature": {
+                        "type": "array",
+                        "items": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "maxItems": 4
+                      }
+                    },
+                    "required": [
+                      "learning",
+                      "young",
+                      "mature"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "quarter": {
+                    "type": "object",
+                    "properties": {
+                      "learning": {
+                        "type": "array",
+                        "items": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "maxItems": 4
+                      },
+                      "young": {
+                        "type": "array",
+                        "items": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "maxItems": 4
+                      },
+                      "mature": {
+                        "type": "array",
+                        "items": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "maxItems": 4
+                      }
+                    },
+                    "required": [
+                      "learning",
+                      "young",
+                      "mature"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "year": {
+                    "type": "object",
+                    "properties": {
+                      "learning": {
+                        "type": "array",
+                        "items": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "maxItems": 4
+                      },
+                      "young": {
+                        "type": "array",
+                        "items": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "maxItems": 4
+                      },
+                      "mature": {
+                        "type": "array",
+                        "items": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "maxItems": 4
+                      }
+                    },
+                    "required": [
+                      "learning",
+                      "young",
+                      "mature"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "all": {
+                    "type": "object",
+                    "properties": {
+                      "learning": {
+                        "type": "array",
+                        "items": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "maxItems": 4
+                      },
+                      "young": {
+                        "type": "array",
+                        "items": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "maxItems": 4
+                      },
+                      "mature": {
+                        "type": "array",
+                        "items": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        "maxItems": 4
+                      }
+                    },
+                    "required": [
+                      "learning",
+                      "young",
+                      "mature"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "month",
+                  "quarter",
+                  "year",
+                  "all"
+                ],
+                "additionalProperties": false
+              },
+              "trueRetention": {
+                "type": "object",
+                "properties": {
+                  "today": {
+                    "type": "object",
+                    "properties": {
+                      "youngPassed": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "youngFailed": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "maturePassed": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "matureFailed": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      }
+                    },
+                    "required": [
+                      "youngPassed",
+                      "youngFailed",
+                      "maturePassed",
+                      "matureFailed"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "yesterday": {
+                    "type": "object",
+                    "properties": {
+                      "youngPassed": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "youngFailed": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "maturePassed": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "matureFailed": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      }
+                    },
+                    "required": [
+                      "youngPassed",
+                      "youngFailed",
+                      "maturePassed",
+                      "matureFailed"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "week": {
+                    "type": "object",
+                    "properties": {
+                      "youngPassed": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "youngFailed": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "maturePassed": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "matureFailed": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      }
+                    },
+                    "required": [
+                      "youngPassed",
+                      "youngFailed",
+                      "maturePassed",
+                      "matureFailed"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "month": {
+                    "type": "object",
+                    "properties": {
+                      "youngPassed": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "youngFailed": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "maturePassed": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "matureFailed": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      }
+                    },
+                    "required": [
+                      "youngPassed",
+                      "youngFailed",
+                      "maturePassed",
+                      "matureFailed"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "year": {
+                    "type": "object",
+                    "properties": {
+                      "youngPassed": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "youngFailed": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "maturePassed": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "matureFailed": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      }
+                    },
+                    "required": [
+                      "youngPassed",
+                      "youngFailed",
+                      "maturePassed",
+                      "matureFailed"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "all": {
+                    "type": "object",
+                    "properties": {
+                      "youngPassed": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "youngFailed": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "maturePassed": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "matureFailed": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      }
+                    },
+                    "required": [
+                      "youngPassed",
+                      "youngFailed",
+                      "maturePassed",
+                      "matureFailed"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "today",
+                  "yesterday",
+                  "week",
+                  "month",
+                  "year",
+                  "all"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "rolloverHour",
+              "fsrsEnabled",
+              "todayNative",
+              "futureDue",
+              "added",
+              "intervals",
+              "stability",
+              "ease",
+              "difficulty",
+              "retrievability",
+              "reviews",
+              "cardCounts",
+              "hours",
+              "answerButtons",
+              "trueRetention"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "today",
+          "graphs",
+          "trueRetention",
+          "data"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "stats.graphPreferences",
+      "description": "Read statistics graph display preferences.",
+      "mutating": false,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "firstDayOfWeek": {
+            "type": "number",
+            "enum": [
+              0,
+              1,
+              5,
+              6
+            ]
+          },
+          "showBacklog": {
+            "type": "boolean"
+          },
+          "separateInactive": {
+            "type": "boolean"
+          },
+          "browserLinks": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "firstDayOfWeek",
+          "showBacklog",
+          "separateInactive",
+          "browserLinks"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "stats.setGraphPreferences",
+      "description": "Persist native graph preferences with undo; browserLinks is a read-only capability.",
+      "mutating": true,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {
+          "preferences": {
+            "type": "object",
+            "properties": {
+              "firstDayOfWeek": {
+                "type": "number",
+                "enum": [
+                  0,
+                  1,
+                  5,
+                  6
+                ]
+              },
+              "showBacklog": {
+                "type": "boolean"
+              },
+              "separateInactive": {
+                "type": "boolean"
+              },
+              "browserLinks": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "firstDayOfWeek",
+              "showBacklog",
+              "separateInactive",
+              "browserLinks"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "preferences"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "changes": {
+            "type": "object",
+            "properties": {
+              "card": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "boolean"
+              },
+              "deck": {
+                "type": "boolean"
+              },
+              "tag": {
+                "type": "boolean"
+              },
+              "notetype": {
+                "type": "boolean"
+              },
+              "config": {
+                "type": "boolean"
+              },
+              "deckConfig": {
+                "type": "boolean"
+              },
+              "mtime": {
+                "type": "boolean"
+              },
+              "browserTable": {
+                "type": "boolean"
+              },
+              "noteText": {
+                "type": "boolean"
+              },
+              "studyQueues": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "card",
+              "note",
+              "deck",
+              "tag",
+              "notetype",
+              "config",
+              "deckConfig",
+              "mtime",
+              "browserTable",
+              "noteText",
+              "studyQueues"
+            ],
+            "additionalProperties": false
+          },
+          "undo": {
+            "type": "object",
+            "properties": {
+              "canUndo": {
+                "type": "boolean"
+              },
+              "undoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "canRedo": {
+                "type": "boolean"
+              },
+              "redoLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 255
+              },
+              "revision": {
+                "type": "string",
+                "maxLength": 256
+              }
+            },
+            "required": [
+              "canUndo",
+              "undoLabel",
+              "canRedo",
+              "redoLabel"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "changes",
+          "undo"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "stats.cardStats",
+      "description": "Read bounded native card statistics and full review history without caching writes to the source collection.",
+      "mutating": false,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {
+          "cardId": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "cardId"
+        ],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "card": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "noteId": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "deckId": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "originalDeckId": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "ord": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 65535
+              },
+              "queue": {
+                "type": "number",
+                "enum": [
+                  -3,
+                  -2,
+                  -1,
+                  0,
+                  1,
+                  2,
+                  3,
+                  4
+                ]
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "new",
+                  "learning",
+                  "review",
+                  "relearning"
+                ]
+              },
+              "due": {
+                "type": "integer",
+                "minimum": -9007199254740991,
+                "maximum": 9007199254740991
+              },
+              "originalDue": {
+                "type": "integer",
+                "minimum": -9007199254740991,
+                "maximum": 9007199254740991
+              },
+              "intervalDays": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1.7976931348623157e+308
+              },
+              "ease": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1.7976931348623157e+308
+              },
+              "repetitions": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "lapses": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "flags": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 7
+              },
+              "position": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": -2147483648,
+                "maximum": 2147483647
+              },
+              "modifiedAt": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "memoryState": {
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "properties": {
+                  "stability": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1.7976931348623157e+308
+                  },
+                  "difficulty": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 10
+                  },
+                  "retrievability": {
+                    "type": [
+                      "number",
+                      "null"
+                    ],
+                    "minimum": 0,
+                    "maximum": 1
+                  }
+                },
+                "required": [
+                  "stability",
+                  "difficulty",
+                  "retrievability"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "id",
+              "noteId",
+              "deckId",
+              "originalDeckId",
+              "ord",
+              "queue",
+              "type",
+              "due",
+              "originalDue",
+              "intervalDays",
+              "ease",
+              "repetitions",
+              "lapses",
+              "flags",
+              "position",
+              "modifiedAt",
+              "memoryState"
+            ],
+            "additionalProperties": false
+          },
+          "memoryState": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "stability": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1.7976931348623157e+308
+              },
+              "difficulty": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 10
+              },
+              "retrievability": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 1
+              }
+            },
+            "required": [
+              "stability",
+              "difficulty",
+              "retrievability"
+            ],
+            "additionalProperties": false
+          },
+          "reviews": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "reviewedAt": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "rating": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 4
+                },
+                "intervalDays": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1.7976931348623157e+308
+                },
+                "lastIntervalDays": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1.7976931348623157e+308
+                },
+                "ease": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1.7976931348623157e+308
+                },
+                "elapsedSeconds": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1.7976931348623157e+308
+                },
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "learning",
+                    "review",
+                    "relearning",
+                    "filtered",
+                    "manual",
+                    "rescheduled"
+                  ]
+                }
+              },
+              "required": [
+                "id",
+                "reviewedAt",
+                "rating",
+                "intervalDays",
+                "lastIntervalDays",
+                "ease",
+                "elapsedSeconds",
+                "kind"
+              ],
+              "additionalProperties": false
+            },
+            "maxItems": 100000
+          },
+          "details": {
+            "type": "object",
+            "properties": {
+              "deck": {
+                "type": "string",
+                "maxLength": 1024
+              },
+              "addedAt": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "firstReviewAt": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "latestReviewAt": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "dueAt": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "duePosition": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": -2147483648,
+                "maximum": 9007199254740991
+              },
+              "averageSeconds": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1.7976931348623157e+308
+              },
+              "totalSeconds": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1.7976931348623157e+308
+              },
+              "cardType": {
+                "type": "string",
+                "maxLength": 4096
+              },
+              "notetype": {
+                "type": "string",
+                "maxLength": 255
+              },
+              "customData": {
+                "type": "string",
+                "maxLength": 1048576
+              },
+              "preset": {
+                "type": "string",
+                "maxLength": 255
+              },
+              "originalDeck": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 1024
+              },
+              "desiredRetention": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 1
+              },
+              "parameters": {
+                "type": "array",
+                "items": {
+                  "type": "number",
+                  "minimum": -100,
+                  "maximum": 100
+                },
+                "maxItems": 64
+              },
+              "reviewHistory": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "reviewedAt": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "kind": {
+                      "type": "string",
+                      "enum": [
+                        "learning",
+                        "review",
+                        "relearning",
+                        "filtered",
+                        "manual",
+                        "rescheduled"
+                      ]
+                    },
+                    "rating": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 4
+                    },
+                    "intervalSeconds": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "lastIntervalSeconds": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "easePerMill": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "elapsedSeconds": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1.7976931348623157e+308
+                    },
+                    "memoryState": {
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "properties": {
+                        "stability": {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1.7976931348623157e+308
+                        },
+                        "difficulty": {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 10
+                        }
+                      },
+                      "required": [
+                        "stability",
+                        "difficulty"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "reviewedAt",
+                    "kind",
+                    "rating",
+                    "intervalSeconds",
+                    "lastIntervalSeconds",
+                    "easePerMill",
+                    "elapsedSeconds",
+                    "memoryState"
+                  ],
+                  "additionalProperties": false
+                },
+                "maxItems": 100000
+              }
+            },
+            "required": [
+              "deck",
+              "addedAt",
+              "firstReviewAt",
+              "latestReviewAt",
+              "dueAt",
+              "duePosition",
+              "averageSeconds",
+              "totalSeconds",
+              "cardType",
+              "notetype",
+              "customData",
+              "preset",
+              "originalDeck",
+              "desiredRetention",
+              "parameters",
+              "reviewHistory"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "card",
+          "memoryState",
+          "reviews",
+          "details"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "stats.today",
+      "description": "Read today's statistics for a deck or the whole collection.",
+      "mutating": false,
+      "longOperation": false,
+      "params": {
+        "type": "object",
+        "properties": {
+          "deckId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "search": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 65536
+          },
+          "includeChildren": {
+            "type": "boolean"
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "cards": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "reviews": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "elapsedSeconds": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1.7976931348623157e+308
+          },
+          "averageSeconds": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1.7976931348623157e+308
+          },
+          "againCount": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "correctCount": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "cards",
+          "reviews",
+          "elapsedSeconds",
+          "averageSeconds",
+          "againCount",
+          "correctCount"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ]
+}

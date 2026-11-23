@@ -1,0 +1,27 @@
+import engine from "./engine.mjs";
+import decks from "./decks.mjs";
+import study from "./study.mjs";
+import cards from "./cards.mjs";
+import notes from "./notes.mjs";
+import notetypes from "./notetypes.mjs";
+import tags from "./tags.mjs";
+import search from "./search.mjs";
+import browser from "./browser.mjs";
+import filtered from "./filtered.mjs";
+import deckOptions from "./deckOptions.mjs";
+import fsrs from "./fsrs.mjs";
+import stats from "./stats.mjs";
+import transfer from "./transfer.mjs";
+import media from "./media.mjs";
+import maintenance from "./maintenance.mjs";
+import imageOcclusion from "./imageOcclusion.mjs";
+import sync from "./sync.mjs";
+import syncServer from "./syncServer.mjs";
+import prefs from "./prefs.mjs";
+import provenance from "./provenance.mjs";
+import progress from "./progress.mjs";
+
+export const CONTRACT_VERSION = 1;
+export const areas = Object.freeze({ engine, decks, study, cards, notes, notetypes, tags, search, browser, filtered, deckOptions, fsrs, stats, transfer, media, maintenance, imageOcclusion, sync, syncServer, prefs, provenance, progress });
+export const methods = Object.freeze(Object.values(areas).flat());
+export const methodByName = new Map(methods.map((method) => [method.name, method]));

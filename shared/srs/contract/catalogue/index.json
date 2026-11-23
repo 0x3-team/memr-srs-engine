@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "areas": [
+    "engine.json",
+    "decks.json",
+    "study.json",
+    "cards.json",
+    "notes.json",
+    "notetypes.json",
+    "tags.json",
+    "search.json",
+    "browser.json",
+    "filtered.json",
+    "deckOptions.json",
+    "fsrs.json",
+    "stats.json",
+    "transfer.json",
+    "media.json",
+    "maintenance.json",
+    "imageOcclusion.json",
+    "sync.json",
+    "syncServer.json",
+    "prefs.json",
+    "provenance.json",
+    "progress.json"
+  ]
+}
